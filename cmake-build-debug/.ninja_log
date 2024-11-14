@@ -1,8 +1,8 @@
 # ninja log v6
-11	658	7499966800200737	CMakeFiles/Kursach.dir/main.cpp.obj	bd31e0c63677389e
-449	892	7499992496294872	Kursach.exe	5619164c6d1a14fd
-9	449	7499992491889787	CMakeFiles/Kursach.dir/custom.cpp.obj	f0c7216830da3d3
-7	686	7499967292707567	CMakeFiles/Kursach.dir/template.cpp.obj	1ebd7e03034e2f5d
-20	168	7498330135809907	CMakeFiles/Kursach.dir/image.cpp.obj	ce80e9650e36f55d
-33	169	7498330135939651	CMakeFiles/Kursach.dir/text.cpp.obj	709ca632ed120a57
-3	427	7502791606252059	build.ninja	625cdc5f35887d4b
+17	420	7521620978932058	CMakeFiles/Kursach.dir/main.cpp.obj	ead9f9224e99f10a
+1311	1749	7521624642691700	Kursach.exe	5619164c6d1a14fd
+39	464	7521474993893867	CMakeFiles/Kursach.dir/custom.cpp.obj	77685cfa6e686aff
+6	1311	7521624629646424	CMakeFiles/Kursach.dir/template.cpp.obj	3981d41331848403
+52	174	7509387976085850	CMakeFiles/Kursach.dir/image.cpp.obj	293ca1c6dae814c5
+62	194	7509387976178508	CMakeFiles/Kursach.dir/text.cpp.obj	4204e7a76dd35e08
+3	427	7532961725737384	build.ninja	625cdc5f35887d4b

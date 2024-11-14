@@ -3,6 +3,10 @@
 
 class TeleGram
 {
+public:
+    void distributing ()
+    {
 
+    }
 };
 #endif //KURSACH_SOCIAL_MEDIA_TG_H

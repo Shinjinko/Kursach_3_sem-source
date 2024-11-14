@@ -11,4 +11,7 @@ add_executable(Kursach main.cpp
         custom.cpp
         functions.h
         Meme_Gen.h
-        Social_Media_TG.h)
+        Social_Media_TG.h
+        Exp.cpp
+        Exp.h
+)
