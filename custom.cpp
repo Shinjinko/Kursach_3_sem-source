@@ -1,160 +1,193 @@
 #include <iostream>
 #include <string>
+#include <windows.h>
+#include "Exp.h"
+#include "custom.h"
+#include "overlay.h"
+#include "generate_text.h"
+#include "overlay_api.h"
+#include <C:\Users\HONOR\.vcpkg-clion\installed\x64-mingw-dynamic\include\opencv3\opencv2\opencv.hpp>
 
 using namespace std;
 
-class Meme_Gen {};
+Custom::Custom() : meme_type(0) {}
 
-class Custom : public Meme_Gen {
-protected:
-    int meme_type;
-    int getMemeType() const { return meme_type; }
-
-public:
-    virtual ~Custom() = default;
-
-    Custom() : meme_type(0){}
-
-    void setMemeType(int type) { meme_type = type; }
-
-    virtual void generateMeme() = 0;
-
-    virtual void apply_settings() = 0;
-};
-
-class C_Image : public Custom {
-protected:
-    string image_pattern;
-public:
-    const string &getPattern() const
-    {
-        return image_pattern;
-    }
-
-    void setPattern(const string &line)
-    {
-        C_Image::image_pattern = line;
-    }
-
-protected:
-    string local_path_image;
-public:
-
-    string getLocalPath() const { return local_path_image; }
-    void setLocalPath(const string& path) { local_path_image = path; }
-
-    void generateMeme() override
-    {
-        //Привязать генератор
-    }
-
-    ~C_Image() override = default;
-};
-
-class I_Settings : public C_Image {
-private:
-    string image_background;
-    string image_color;
-    //smth else
-public:
-    string getOverlayText() const { return image_background; }
-    void setOverlayText(const string& text) { image_background = text; }
-
-    string getTextColor() const { return image_color; }
-    void setTextColor(const string& color) { color ; }
-
-
-    I_Settings() : image_color(), image_background() {}
-
-    void apply_settings() override{
-        //Добавить возможность возврата
-    }
-
-    void generateMeme() override {
-        apply_settings();
-        C_Image::generateMeme();
-    }
-};
-
-class C_Text : public Custom {
-protected:
-    string text_pattern;
-public:
-    string getMemeText() const { return text_pattern; }
-    void setMemeText(const string& text) { text_pattern = text; }
-
-    void generateMeme() override {
-        cout << "Генерация мема с текстом: " << text_pattern << endl;
-    }
-};
-
-class T_Settings : public C_Text {
-private:
-    string text_color;
-    string text_font;
-    string text_background;
-    int font_size;
-public:
-    const string &getTextColor() const { return text_color; }
-    void setTextColor(const string& color) { text_color = color; }
-
-    const string &getTextFont() const { return text_font; }
-    void setTextFont(const string& font) { text_font = font; }
-
-    int getFontSize() const { return font_size; }
-    void setFontSize(int size) { font_size = size; }
-
-    const string &getTextBackground() const { return text_background; }
-    void setTextBackground(const string &textBackground) { text_background = textBackground; }
-
-    T_Settings() : text_color(), text_font(), font_size() {}
-
-    void apply_settings() override{
-        //Добавить возможность возврата
-    }
-
-    void generateMeme() override {
-        apply_settings();
-        C_Text::generateMeme();
-        //привязать
-    }
-};
-
-class Overlay : public I_Settings, public T_Settings
+void Custom::setMemeType(int type)
 {
-public:
+    meme_type = type;
+}
 
-    void do_overlay ();
-    //ещё одно ИИ
-};
-
-void Overlay::do_overlay()
+int Custom::getMemeType() const
 {
-    if(local_path_image == " ")
+    return meme_type;
+}
+
+void c_image ()
+{
+    I_Settings *image = new I_Settings;
+    cout << "Введите запрос для генерации изображения: ";
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    getline(cin, image->image_pattern);
+
+    while(true)
     {
-        //создать текст
-    }
-    else if (text_pattern == " ")
-    {
-        // создать изображение
+        cout << "1. Изменить запрос;\n"
+                "0. Далее.\n";
+
+            if(Numbers::check_input())
+            {
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                getline(cin, image->image_pattern);
+            }
+            else
+                break;
     }
 
-    //вызов функции с наложением
+    cout << "Желаете открыть расширенные настройки? (1-да/0-нет)\n";
+
+    if (Numbers::check_input())
+    {
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+        C_Image* oldImage = image;
+        image = new I_Settings(*oldImage);
+        delete oldImage;
+
+        cout << "Введите промт для фона картинки: ";
+        getline(cin, image->image_background);
+
+        cout << "Введите промт для основного цвета картинки: ";
+        getline(cin, image->image_color);
+
+        cout << "Настройки приняты.\n";
+    }
+    else
+    {
+        image->setImageColor("none");
+        image->setBackgroundColor("none");
+    }
+
+    image->generate_meme();
+    ShellExecute(nullptr, "open", "output.jpg", nullptr, nullptr, SW_SHOWNORMAL);
+    delete image;
+}
+
+void c_text() {
+    T_Settings* textSettings = new T_Settings;
+
+    std::cout << "Введите текст для генерации: ";
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    std::getline(std::cin, textSettings->text_pattern);
+
+    while (true) {
+        std::cout << "1. Изменить текст;\n"
+                  << "0. Далее.\n";
+
+        int choice;
+        if (Numbers::check_input()) {
+            std::cin >> choice;
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Очистка буфера
+        } else {
+            break;
+        }
+
+        if (choice == 1) {
+            std::cout << "Введите новый текст: ";
+            std::getline(std::cin, textSettings->text_pattern);
+        } else {
+            break;
+        }
+    }
+
+    std::cout << "Желаете настроить параметры текста? (1-да/0-нет): ";
+    int settingsChoice;
+    if (Numbers::check_input()) {
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Очистка буфера
+        std::cin >> settingsChoice;
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Очистка буфера
+
+        if (settingsChoice == 1) {
+            std::cout << "Введите цвет текста: ";
+            std::string color;
+            std::getline(std::cin, color);
+            textSettings->setTextColor(color);
+
+            std::cout << "Введите шрифт текста: ";
+            std::string font;
+            std::getline(std::cin, font);
+            textSettings->setTextFont(font);
+
+            std::cout << "Введите фон текста: ";
+            std::string background;
+            std::getline(std::cin, background);
+            textSettings->setTextBackground(background);
+
+            std::cout << "Введите размер шрифта: ";
+            int fontSize;
+            std::cin >> fontSize;
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Очистка буфера
+            textSettings->setFontSize(fontSize);
+        }
+    } else {
+        textSettings->setTextColor("default");
+        textSettings->setTextFont("default");
+        textSettings->setTextBackground("default");
+        textSettings->setFontSize(12);
+    }
+
+    std::string prompt = textSettings->text_pattern +
+                         ", color: " + textSettings->getTextColor() +
+                         ", font: " + textSettings->getTextFont() +
+                         ", background: " + textSettings->getTextBackground() +
+                         ", font size: " + std::to_string(textSettings->getFontSize());
+
+    std::cout << "Отправка запроса с данными:\n" << prompt << std::endl;
+
+    std::string generatedText = getResponseFromHuggingFace(prompt);
+
+    if (!generatedText.empty()) {
+        std::cout << "Сгенерированный текст:\n" << generatedText << std::endl;
+    } else {
+        std::cout << "Ошибка при генерации текста." << std::endl;
+    }
+
+    delete textSettings;
+}
+
+void overlay() {
+
 }
 
 void custom() {
 
-//Привязать гугл переводчик
+//TODO: Привязать гугл переводчик
 
-    Custom* meme = nullptr;
-    int choice_;
+    Overlay overlay;
+    while (true)
+    {
+        cerr << "Внимание! Все дальнейшие запросы принимаются только на английском языке!\n";
+        cout << "Выберите тип мема:\n"
+                "1. Изображение;\n"
+                "2. Текст;\n"
+                "3. Наложение;\n"
+                "0. Назад.\n";
 
-    cout << "Выберите тип мема:\n"
-         << "1. Изображение\n"
-         << "2. Текст\n"
-         << "Ваш выбор: ";
-    cin >> choice_;
-
-    delete meme;
-
+        switch (Numbers::check_input())
+        {
+            case 1:
+                c_image();
+                break;
+            case 2:
+                c_text();
+                break;
+            case 3:
+                overlay.do_overlay();
+                break;
+            case 0:
+                return;
+            default:
+                cout << "Неверный выбор. Попробуйте снова." << endl;
+                break;
+        }
+    }
 }

@@ -3,10 +3,13 @@
 #include <vector>
 #include <fstream>
 #include <windows.h>
+#include <filesystem>
+#include "Exp.h"
+namespace fs = std::filesystem;
 
 #define FILENAME_JOKES "D:\\Proga\\Turovec\\Kursach\\Templates\\Jokes.txt"
 #define FILENAME_JOKES_OUTPUT "D:\\Proga\\Turovec\\Kursach\\Templates\\Jokes_output.txt"
-#define NUM_PHOTOS 20
+#define FILENAME_IMAGE_PATH "D:\\Proga\\Turovec\\Kursach\\Templates\\"
 
 using namespace std;
 
@@ -15,20 +18,21 @@ class Meme_Gen {};
 template <typename T>
 class Template : public Meme_Gen {
 public:
-    int choice;
+    Template() = default;
+    virtual ~Template() = default;
 
-    Template() : choice(0) {}
+    virtual void showTemplate(int choice) = 0;
 
-    int getChoice() const { return choice; }
-    void setChoice(int choice_there) { this->choice = choice_there; }
-
-    virtual void showTemplate() = 0;
-
-protected:
     vector<T> contents;
+protected:
 
     void loadContentFromFile(const string& filename) {
         ifstream file(filename);
+        if (!file.is_open()) {
+            cerr << "Не удалось открыть файл: " << filename << endl;
+            return;
+        }
+
         string line;
         T contentItem;
 
@@ -49,58 +53,81 @@ protected:
 
 class T_Text : public Template<string> {
 public:
-    explicit T_Text(int choice) : Template() {
-        this->choice = choice;
+    T_Text() {
         loadContentFromFile(FILENAME_JOKES);
     }
 
-    void showTemplate() override {
-        if (choice > 0 && choice <= contents.size()) {
+    void showTemplate(int choice) override
+    {
 
-            string tempFilePath = FILENAME_JOKES_OUTPUT;
-            ofstream tempFile(tempFilePath);
-            tempFile << contents[choice - 1];
-            tempFile.close();
-
-            ShellExecute(nullptr, nullptr, tempFilePath.c_str(), nullptr, nullptr, SW_SHOWNORMAL);
-        } else {
-            cout << "Неверный выбор.\n";
+        string tempFilePath = FILENAME_JOKES_OUTPUT;
+        ofstream tempFile(tempFilePath);
+        if (!tempFile.is_open()) {
+            cerr << "Не удалось открыть файл для записи: " << tempFilePath << endl;
+            return;
         }
+
+        tempFile << contents[choice - 1];
+        tempFile.close();
+
+        ShellExecute(nullptr, "open", tempFilePath.c_str(), nullptr, nullptr, SW_SHOWNORMAL);
     }
 };
 
 class T_Image : public Template<string> {
 public:
-    explicit T_Image(int choice) : Template() {
-        this->choice = choice;
-        for (int i = 1; i <= NUM_PHOTOS; ++i) {
-            contents.push_back("D:/Proga/Turovec/Kursach/Templates/" + to_string(i) + ".jpg");
-        }
+    T_Image() {
+        string path = FILENAME_IMAGE_PATH;
+        for (const auto& entry : fs::directory_iterator(path))
+            if (entry.path().extension() == ".jpg")
+                contents.push_back(entry.path().string());
     }
 
-    void showTemplate() override {
-        if (choice > 0 && choice <= contents.size()) {
+    void showTemplate(int choice) override {
 
-
-            ShellExecute(0, 0, contents[choice - 1].c_str(), 0, 0, SW_SHOWNORMAL);
-        } else {
-            cout << "Неверный выбор.\n";
-        }
+        ShellExecute(nullptr, "open", contents[choice - 1].c_str(), nullptr, nullptr, SW_SHOWNORMAL);
     }
 };
 
-int templates() {
-    cout << "Text (1-5): ";
-    int ch;
-    cin >> ch;
+void text() {
+    T_Text pattern;
+    int choice;
+    cout << "Выберите текстовый шаблон (1-" << pattern.contents.size() << "): ";
+    choice = Out_of_range::out_of_range(pattern.contents.size());
+    pattern.showTemplate(choice);
+}
 
-    T_Text textTemplate(ch);
-    textTemplate.showTemplate();
 
-    cout << "Image (1-20):";
-    cin >> ch;
+void image() {
+    T_Image pattern;
+    int choice;
+    cout << "Выберите изображение (1-" << pattern.contents.size() << "): ";
+    choice = Out_of_range::out_of_range(pattern.contents.size());
+    cout << "Вывод изображения.\n";
+    pattern.showTemplate(choice);
+}
 
-    T_Image imageTemplate(ch);
-    imageTemplate.showTemplate();
-    return 0;
+void templates() {
+    while (true) {
+    cout << "\nВведите желаемый тип шаблона: "
+            "\n1. Текст;"
+            "\n2. Изображение;"
+            "\n0. Назад." << endl;
+
+        int choice;
+        cin >> choice;
+        switch (choice) {
+            case 1:
+                text();
+                break;
+            case 2:
+                image();
+                break;
+            case 0:
+                return;
+            default:
+                cout << "Число вне вариантов. Повторите ввод: ";
+                break;
+        }
+    }
 }

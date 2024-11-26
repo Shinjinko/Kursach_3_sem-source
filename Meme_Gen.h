@@ -7,6 +7,6 @@ protected:
 public:
     int getType () const { return type; }
     void setType (const int choise) { type = choise; }
-} Generation;
+};
 
 #endif //kursach_meme_gen_h

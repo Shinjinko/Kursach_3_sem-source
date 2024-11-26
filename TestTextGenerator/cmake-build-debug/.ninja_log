@@ -1,7 +1,0 @@
-# ninja log v6
-10	1336	7521082429438638	CMakeFiles/TestTextGenerator.dir/main.cpp.obj	4ca4924b01ff55d5
-1337	3182	7521082442704400	TestTextGenerator.exe	bc789c7154469e16
-11	1441	7521641022724695	CMakeFiles/TestTextGenerator.dir/main.cpp.obj	d6dc9e44c6e67447
-1442	3489	7521641037031590	TestTextGenerator.exe	a82ce7be9aba3c6d
-9	1628	7521641626160365	CMakeFiles/TestTextGenerator.dir/main.cpp.obj	d6dc9e44c6e67447
-1628	3636	7521641642360448	TestTextGenerator.exe	a82ce7be9aba3c6d
