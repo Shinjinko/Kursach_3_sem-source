@@ -1,3 +1,3 @@
-D:/Proga/Turovec/Kursach/without UI/cmake-build-debug/CMakeFiles/Kursach.dir
-D:/Proga/Turovec/Kursach/without UI/cmake-build-debug/CMakeFiles/edit_cache.dir
-D:/Proga/Turovec/Kursach/without UI/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+D:/Proga/Turovec/I_want_fix_this/cmake-build-debug/CMakeFiles/Kursach.dir
+D:/Proga/Turovec/I_want_fix_this/cmake-build-debug/CMakeFiles/edit_cache.dir
+D:/Proga/Turovec/I_want_fix_this/cmake-build-debug/CMakeFiles/rebuild_cache.dir

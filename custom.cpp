@@ -8,7 +8,6 @@
 //#include "overlay_api.h"
 //#include <C:\Users\HONOR\.vcpkg-clion\installed\x64-mingw-dynamic\include\opencv3\opencv2\opencv.hpp>
 
-using namespace std;
 
 Custom::Custom() : meme_type(0) {}
 
@@ -22,28 +21,28 @@ int Custom::getMemeType() const
     return meme_type;
 }
 
-string c_image ()
+std::string c_image ()
 {
     I_Settings *image = new I_Settings;
-    cout << "Введите запрос для генерации изображения: ";
+    std::cout << "Введите запрос для генерации изображения: ";
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-    getline(cin, image->image_pattern);
+    getline(std::cin, image->image_pattern);
 
     while(true)
     {
-        cout << "1. Изменить запрос;\n"
+        std::cout << "1. Изменить запрос;\n"
                 "0. Далее.\n";
 
             if(Numbers::check_input())
             {
                 std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-                getline(cin, image->image_pattern);
+                getline(std::cin, image->image_pattern);
             }
             else
                 break;
     }
 
-    cout << "Желаете открыть расширенные настройки? (1-да/0-нет)\n";
+    std::cout << "Желаете открыть расширенные настройки? (1-да/0-нет)\n";
 
     if (Numbers::check_input())
     {
@@ -53,13 +52,13 @@ string c_image ()
         image = new I_Settings(*oldImage);
         delete oldImage;
 
-        cout << "Введите промт для фона картинки: ";
-        getline(cin, image->image_background);
+        std::cout << "Введите промт для фона картинки: ";
+        getline(std::cin, image->image_background);
 
-        cout << "Введите промт для основного цвета картинки: ";
-        getline(cin, image->image_color);
+        std::cout << "Введите промт для основного цвета картинки: ";
+        getline(std::cin, image->image_color);
 
-        cout << "Настройки приняты.\n";
+        std::cout << "Настройки приняты.\n";
     }
     else
     {
@@ -73,7 +72,7 @@ string c_image ()
     return "output.jpg";
 }
 
-string c_text() {
+std::string c_text() {
     T_Settings* textSettings = new T_Settings;
 
     std::cout << "Введите текст для генерации: ";
@@ -109,8 +108,8 @@ string c_text() {
 
         if (settingsChoice == 1) {
             std::cout << "Введите цвет текста: ";
-            string color;
-            cin >> color;
+            std::string color;
+            std::cin >> color;
             textSettings->setTextColor(color);
 
             std::cout << "Введите шрифт текста: ";
@@ -163,8 +162,8 @@ void custom() {
     Overlay overlay;
     while (true)
     {
-        cerr << "Внимание! Все дальнейшие запросы принимаются только на английском языке!\n";
-        cout << "Выберите тип мема:\n"
+        std::cerr << "Внимание! Все дальнейшие запросы принимаются только на английском языке!\n";
+        std::cout << "Выберите тип мема:\n"
                 "1. Изображение;\n"
                 "2. Текст;\n"
                 "3. Наложение;\n"
@@ -184,7 +183,7 @@ void custom() {
             case 0:
                 return;
             default:
-                cout << "Неверный выбор. Попробуйте снова." << endl;
+                std::cout << "Неверный выбор. Попробуйте снова." << std::endl;
                 break;
         }
     }

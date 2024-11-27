@@ -1,8 +1,10 @@
 #ifndef KURSACH_OVERLAY_H
 #define KURSACH_OVERLAY_H
-#include "c_image.h"
 #include "c_text.h"
-#include "Exp.h"
+#include "c_image.h"
+
+class I_Settings;
+class T_Settings;
 
 class Overlay : public I_Settings, public T_Settings
 {
@@ -17,7 +19,7 @@ public:
 
     void apply_settings() override {}
 
-    void do_overlay (const Overlay& overlay);
+    void do_overlay (Overlay& overlay);
 
     ~Overlay() override = default;
 };

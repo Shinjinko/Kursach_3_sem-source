@@ -6,7 +6,7 @@
 #include "image_api.h"
 #include "Exp.h"
 
-using namespace std;
+
 
 class C_Image : public virtual Custom {
 public:
@@ -23,26 +23,26 @@ public:
 
         return *this;
     }
-    const string &getPattern() const;
+    const std::string &getPattern() const;
 
-    void set_pattern(const string &line);
+    void set_pattern(const std::string &line);
 
-    string image_pattern;
-    mutable string local_path_image;
+    std::string image_pattern;
+    mutable std::string local_path_image;
 
-    string getLocalPath() const { return local_path_image; }
-    void setLocalPath(const string& path) const { local_path_image = path; }
+    std::string getLocalPath() const { return local_path_image; }
+    void setLocalPath(const std::string& path) const { local_path_image = path; }
 
     ~C_Image() override = default;
 };
 
 class I_Settings : public C_Image {
 public:
-    string image_background;
-    string image_color;
+    std::string image_background;
+    std::string image_color;
 
-    string getImageColor() const;
-    void setImageColor(const string& color);
+    std::string getImageColor() const;
+    void setImageColor(const std::string& color);
 
 
     I_Settings() : image_color(""), image_background("") {}
@@ -82,8 +82,10 @@ public:
         Image_Api(fullPrompt);
     }
 
-    string getBackgroundColor() const;
-    void setBackgroundColor(const string& color);
+    std::string getBackgroundColor() const;
+    void setBackgroundColor(const std::string& color);
+
+    ~I_Settings() override {}
 };
 
 #endif //KURSACH_C_IMAGE_H

@@ -29,5 +29,6 @@ add_executable(Kursach main.cpp
         image_api.cpp
         generate_text.cpp
 )
+
 include_directories(${OpenCV_INCLUDE_DIRS})
 target_link_libraries(Kursach CURL::libcurl OpenSSL::SSL OpenSSL::Crypto ${OpenCV_LIBS} JsonCpp::JsonCpp)

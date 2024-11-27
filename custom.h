@@ -3,7 +3,6 @@
 #include "Meme_Gen.h"
 #include <string>
 
-using namespace std;
 
 class Custom : public Meme_Gen {
 protected:
@@ -22,7 +21,7 @@ public:
     virtual void apply_settings() = 0;
 };
 
-string c_image();
-string c_text();
+std::string c_image();
+std::string c_text();
 void overlay();
 #endif //KURSACH_CUSTOM_H

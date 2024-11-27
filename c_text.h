@@ -5,47 +5,46 @@
 #include <opencv2/core/types.hpp>
 #include "custom.h"
 
-using namespace std;
 
 class C_Text : public virtual Custom {
 public:
-    string getMemeText() const;
-    void setMemeText(const string& text) const;
+    std::string getMemeText() const;
+    void setMemeText(const std::string& text) const;
 
     void apply_settings() override {
-        cout << "Применение настроек для изображения." << endl;
+        std::cout << "Применение настроек для изображения." << std::endl;
     }
     void generate_meme() override {
         std::string prompt = "Helen";
 //TODO: нормально вызвать функцию генерации текста
-        string response;
-        cin >> response;
+        std::string response;
+        std::cin >> response;
 
         std::cout << "Final Answer: " << response << std::endl;
     }
 
-    mutable string text_pattern;
+    mutable std::string text_pattern;
 };
 
 class T_Settings : public C_Text {
 private:
-    string text_background;
-    string text_font;
+    std::string text_background;
+    std::string text_font;
 public:
-    string text_color;
+    std::string text_color;
     int font_size;
 
-    const string getTextColor() const ;
-    void setTextColor(string color);
+    const std::string getTextColor() const ;
+    void setTextColor(std::string color);
 
-    const string &getTextFont() const;
-    void setTextFont(const string& font);
+    const std::string &getTextFont() const;
+    void setTextFont(const std::string& font);
 
     int getFontSize() const;
     void setFontSize(int size);
 
-    const string &getTextBackground() const;
-    void setTextBackground(const string &textBackground);
+    const std::string &getTextBackground() const;
+    void setTextBackground(const std::string &textBackground);
 
     T_Settings() : text_color(""), text_font(""), text_background(""), font_size(12) {}
 

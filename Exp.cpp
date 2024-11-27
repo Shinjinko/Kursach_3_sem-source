@@ -3,6 +3,7 @@
 #include <string>
 #include "generate_text.h"
 #include "custom.h"
+#include "overlay.h"
 using namespace std;
 
 jmp_buf Numbers::jumpBuffer;
@@ -68,7 +69,7 @@ std::string Check_server_answer::validate_and_resend(const std::string& prompt, 
     return "Error: Failed after multiple attempts.";
 }
 
-void Overlay_validator::validate_overlay_data(const Overlay& overlay)
+void Overlay_validator::validate_overlay_data(Overlay& overlay)
 {
     if (overlay.getLocalPath() == "") {
         cerr << "Изображение не задано! Запускается генерация.\n";
