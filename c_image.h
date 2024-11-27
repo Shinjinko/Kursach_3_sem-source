@@ -4,6 +4,7 @@
 #include "custom.h"
 #include <iostream>
 #include "image_api.h"
+#include "Exp.h"
 
 using namespace std;
 
@@ -12,9 +13,10 @@ public:
 
     C_Image() : image_pattern(""), local_path_image("") {};
 
-    C_Image& operator=(const C_Image& other) {
+    C_Image& operator=(const C_Image& other)
+            {
         if (this == &other)
-            return *this; // Защита от самоприсваивания
+            return *this;
 
         image_pattern = other.image_pattern;
         local_path_image = other.local_path_image;
@@ -26,10 +28,10 @@ public:
     void set_pattern(const string &line);
 
     string image_pattern;
-    string local_path_image;
+    mutable string local_path_image;
 
     string getLocalPath() const { return local_path_image; }
-    void setLocalPath(const string& path) { local_path_image = path; }
+    void setLocalPath(const string& path) const { local_path_image = path; }
 
     ~C_Image() override = default;
 };

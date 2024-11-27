@@ -2,6 +2,7 @@
 #define KURSACH_C_TEXT_H
 #include <iostream>
 #include <string>
+#include <opencv2/core/types.hpp>
 #include "custom.h"
 
 using namespace std;
@@ -9,7 +10,7 @@ using namespace std;
 class C_Text : public virtual Custom {
 public:
     string getMemeText() const;
-    void setMemeText(const string& text);
+    void setMemeText(const string& text) const;
 
     void apply_settings() override {
         cout << "Применение настроек для изображения." << endl;
@@ -23,18 +24,19 @@ public:
         std::cout << "Final Answer: " << response << std::endl;
     }
 
-    string text_pattern;
+    mutable string text_pattern;
 };
 
 class T_Settings : public C_Text {
 private:
-    string text_color;
-    string text_font;
     string text_background;
-    int font_size;
+    string text_font;
 public:
-    const string &getTextColor() const ;
-    void setTextColor(const string& color);
+    string text_color;
+    int font_size;
+
+    const string getTextColor() const ;
+    void setTextColor(string color);
 
     const string &getTextFont() const;
     void setTextFont(const string& font);

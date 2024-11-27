@@ -11,7 +11,7 @@ private:
     string local_path;
     int user_id;
 public:
-    virtual void distributing ();
+    virtual void distributing (){}
 };
 
 class Telegram : public Social_Media

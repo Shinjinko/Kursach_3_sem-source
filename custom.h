@@ -1,6 +1,9 @@
 #ifndef KURSACH_CUSTOM_H
 #define KURSACH_CUSTOM_H
 #include "Meme_Gen.h"
+#include <string>
+
+using namespace std;
 
 class Custom : public Meme_Gen {
 protected:
@@ -19,7 +22,7 @@ public:
     virtual void apply_settings() = 0;
 };
 
-void c_image();
-void c_text();
+string c_image();
+string c_text();
 void overlay();
 #endif //KURSACH_CUSTOM_H

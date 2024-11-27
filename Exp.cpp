@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 #include "generate_text.h"
+#include "custom.h"
 using namespace std;
 
 jmp_buf Numbers::jumpBuffer;
@@ -26,13 +27,13 @@ int Numbers::check_input() {
         cerr << "Ошибка: введённое число выходит за пределы допустимого диапазона." << endl;
         longjmp(jumpBuffer, 1);
     }
-    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Очистка буфера
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     return answer;
 }
 
 int Out_of_range::out_of_range(int size)
 {
-    int index = 0;
+    int index;
     index = Numbers::check_input();
     try
     {
@@ -52,14 +53,13 @@ std::string Check_server_answer::validate_and_resend(const std::string& prompt, 
     int attempts = 0;
 
     while (attempts < max_attempts) {
-        response = getResponseFromHuggingFace(prompt); // Вызываем функцию для отправки запроса
+        response = getResponseFromHuggingFace(prompt);
 
         if (response == "Error: An empty response from the model.") {
             std::cerr << "Error received. Retrying... (" << attempts + 1 << "/" << max_attempts << ")" << std::endl;
-            std::this_thread::sleep_for(std::chrono::seconds(2)); // Задержка перед повторной попыткой
+            std::this_thread::sleep_for(std::chrono::seconds(2));
             attempts++;
         } else {
-            // Если ответ корректный, выходим из цикла
             return response;
         }
     }
@@ -68,14 +68,14 @@ std::string Check_server_answer::validate_and_resend(const std::string& prompt, 
     return "Error: Failed after multiple attempts.";
 }
 
-static void validateOverlayData(const Overlay& overlay)
+void Overlay_validator::validate_overlay_data(const Overlay& overlay)
 {
     if (overlay.getLocalPath() == "") {
-        throw std::runtime_error("Изображение не задано! Запускается генерация.\n");
-        image();
+        cerr << "Изображение не задано! Запускается генерация.\n";
+        overlay.setLocalPath(c_image());
     }
     if (overlay.getMemeText() == "") {
-        throw std::runtime_error("Текст не задан! Запускается генерация.\n");
-        text();
+        cerr << "Текст не задан! Запускается генерация.\n";
+        overlay.setMemeText(c_text());
     }
 }

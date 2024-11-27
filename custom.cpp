@@ -5,8 +5,8 @@
 #include "custom.h"
 #include "overlay.h"
 #include "generate_text.h"
-#include "overlay_api.h"
-#include <C:\Users\HONOR\.vcpkg-clion\installed\x64-mingw-dynamic\include\opencv3\opencv2\opencv.hpp>
+//#include "overlay_api.h"
+//#include <C:\Users\HONOR\.vcpkg-clion\installed\x64-mingw-dynamic\include\opencv3\opencv2\opencv.hpp>
 
 using namespace std;
 
@@ -22,7 +22,7 @@ int Custom::getMemeType() const
     return meme_type;
 }
 
-void c_image ()
+string c_image ()
 {
     I_Settings *image = new I_Settings;
     cout << "Введите запрос для генерации изображения: ";
@@ -70,9 +70,10 @@ void c_image ()
     image->generate_meme();
     ShellExecute(nullptr, "open", "output.jpg", nullptr, nullptr, SW_SHOWNORMAL);
     delete image;
+    return "output.jpg";
 }
 
-void c_text() {
+string c_text() {
     T_Settings* textSettings = new T_Settings;
 
     std::cout << "Введите текст для генерации: ";
@@ -108,8 +109,8 @@ void c_text() {
 
         if (settingsChoice == 1) {
             std::cout << "Введите цвет текста: ";
-            std::string color;
-            std::getline(std::cin, color);
+            string color;
+            cin >> color;
             textSettings->setTextColor(color);
 
             std::cout << "Введите шрифт текста: ";
@@ -136,7 +137,7 @@ void c_text() {
     }
 
     std::string prompt = textSettings->text_pattern +
-                         ", color: " + textSettings->getTextColor() +
+                         ", color: " + "12" +
                          ", font: " + textSettings->getTextFont() +
                          ", background: " + textSettings->getTextBackground() +
                          ", font size: " + std::to_string(textSettings->getFontSize());
@@ -152,10 +153,7 @@ void c_text() {
     }
 
     delete textSettings;
-}
-
-void overlay() {
-
+    return generatedText;
 }
 
 void custom() {
@@ -181,7 +179,7 @@ void custom() {
                 c_text();
                 break;
             case 3:
-                overlay.do_overlay();
+                overlay.do_overlay(overlay);
                 break;
             case 0:
                 return;

@@ -2,8 +2,10 @@
 #include <string>
 #include <vector>
 #include <fstream>
-#include <windows.h>
 #include <filesystem>
+#define byte win_byte_override
+#include <windows.h>
+#include "Meme_Gen.h"
 #include "Exp.h"
 namespace fs = std::filesystem;
 
@@ -11,9 +13,8 @@ namespace fs = std::filesystem;
 #define FILENAME_JOKES_OUTPUT "D:\\Proga\\Turovec\\Kursach\\Templates\\Jokes_output.txt"
 #define FILENAME_IMAGE_PATH "D:\\Proga\\Turovec\\Kursach\\Templates\\"
 
-using namespace std;
 
-class Meme_Gen {};
+using namespace std;
 
 template <typename T>
 class Template : public Meme_Gen {

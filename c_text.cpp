@@ -1,10 +1,10 @@
 #include "c_text.h"
 
 string C_Text::getMemeText() const { return text_pattern; }
-void C_Text::setMemeText(const string& text) { text_pattern = text; }
+void C_Text::setMemeText(const string& text) const { text_pattern = text; }
 
-const string &T_Settings::getTextColor() const { return text_color; }
-void T_Settings::setTextColor(const string& color) { text_color = color; }
+const string T_Settings::getTextColor() const { return text_color; }
+void T_Settings::setTextColor(string color) { text_color = color; }
 
 const string &T_Settings::getTextFont() const { return text_font; }
 void T_Settings::setTextFont(const string& font) { text_font = font; }

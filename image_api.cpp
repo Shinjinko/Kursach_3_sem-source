@@ -11,7 +11,6 @@ std::string cleanBase64String(const std::string& encoded)
 {
     std::string cleanStr = encoded;
 
-    // Убираем кавычки, пробелы, символы новой строки и другие лишние символы
     cleanStr.erase(std::remove(cleanStr.begin(), cleanStr.end(), '\"'), cleanStr.end());
     cleanStr.erase(std::remove(cleanStr.begin(), cleanStr.end(), '\n'), cleanStr.end());
     cleanStr.erase(std::remove(cleanStr.begin(), cleanStr.end(), '\r'), cleanStr.end());
@@ -24,7 +23,6 @@ size_t WriteCallback_s(void* contents, size_t size, size_t nmemb, void* userp) {
     return size * nmemb;
 }
 
-// Функция для декодирования Base64
 std::vector<unsigned char> base64Decode(const std::string& encoded) {
     BIO* bio = BIO_new_mem_buf(encoded.data(), encoded.size());
     BIO* b64 = BIO_new(BIO_f_base64());
