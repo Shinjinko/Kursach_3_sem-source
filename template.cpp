@@ -3,15 +3,17 @@
 #include <vector>
 #include <fstream>
 #include <filesystem>
-#define byte win_byte_override
 #include <windows.h>
+#include <regex>
+#include <algorithm>
 #include "Meme_Gen.h"
 #include "Exp.h"
+#include "social_media.h"
 namespace fs = std::filesystem;
 
-#define FILENAME_JOKES "D:\\Proga\\Turovec\\Kursach\\Templates\\Jokes.txt"
-#define FILENAME_JOKES_OUTPUT "D:\\Proga\\Turovec\\Kursach\\Templates\\Jokes_output.txt"
-#define FILENAME_IMAGE_PATH "D:\\Proga\\Turovec\\Kursach\\Templates\\"
+#define FILENAME_JOKES R"(D:\Proga\Turovec\Kursach\Meme Generator\templates\text\jokes.txt)"
+#define FILENAME_JOKES_OUTPUT R"(D:\Proga\Turovec\Kursach\Meme Generator\templates\text\jokes_output.txt)"
+#define FILENAME_IMAGE_PATH R"(D:\Proga\Turovec\Kursach\Meme Generator\templates\photo)"
 
 
 using namespace std;
@@ -22,7 +24,7 @@ public:
     Template() = default;
     virtual ~Template() = default;
 
-    virtual void showTemplate(int choice) = 0;
+    virtual std::string showTemplate(int choice) = 0;
 
     vector<T> contents;
 protected:
@@ -30,7 +32,7 @@ protected:
     void loadContentFromFile(const string& filename) {
         ifstream file(filename);
         if (!file.is_open()) {
-            cerr << "Íå óäàëîñü îòêðûòü ôàéë: " << filename << endl;
+            cerr << "ÐÐµ ÑƒÐ´Ð°Ð»Ð¾ÑÑŒ Ð¾Ñ‚ÐºÑ€Ñ‹Ñ‚ÑŒ Ñ„Ð°Ð¹Ð»: " << filename << endl;
             return;
         }
 
@@ -58,20 +60,21 @@ public:
         loadContentFromFile(FILENAME_JOKES);
     }
 
-    void showTemplate(int choice) override
+    std::string showTemplate(int choice) override
     {
 
         string tempFilePath = FILENAME_JOKES_OUTPUT;
         ofstream tempFile(tempFilePath);
         if (!tempFile.is_open()) {
-            cerr << "Íå óäàëîñü îòêðûòü ôàéë äëÿ çàïèñè: " << tempFilePath << endl;
-            return;
+            cerr << "ÐÐµ ÑƒÐ´Ð°Ð»Ð¾ÑÑŒ Ð¾Ñ‚ÐºÑ€Ñ‹Ñ‚ÑŒ Ñ„Ð°Ð¹Ð» Ð´Ð»Ñ Ð·Ð°Ð¿Ð¸ÑÐ¸: " << tempFilePath << endl;
+            return "";
         }
 
         tempFile << contents[choice - 1];
         tempFile.close();
 
         ShellExecute(nullptr, "open", tempFilePath.c_str(), nullptr, nullptr, SW_SHOWNORMAL);
+        return FILENAME_JOKES_OUTPUT;
     }
 };
 
@@ -82,38 +85,63 @@ public:
         for (const auto& entry : fs::directory_iterator(path))
             if (entry.path().extension() == ".jpg")
                 contents.push_back(entry.path().string());
+        std::sort(contents.begin(), contents.end(), [](const std::string& a, const std::string& b) {
+            std::smatch match_a, match_b;
+            std::regex number_regex(R"((\d+))");
+            std::regex_search(a, match_a, number_regex);
+            std::regex_search(b, match_b, number_regex);
+
+            int num_a = match_a.empty() ? 0 : std::stoi(match_a[1]);
+            int num_b = match_b.empty() ? 0 : std::stoi(match_b[1]);
+
+            return num_a < num_b;
+        });
     }
 
-    void showTemplate(int choice) override {
+    std::string showTemplate(int choice) override {
 
         ShellExecute(nullptr, "open", contents[choice - 1].c_str(), nullptr, nullptr, SW_SHOWNORMAL);
+        return contents[choice - 1].c_str();
     }
 };
 
 void text() {
     T_Text pattern;
+    Social_Media media ("");
+
     int choice;
-    cout << "Âûáåðèòå òåêñòîâûé øàáëîí (1-" << pattern.contents.size() << "): ";
+    cout << "Ð’Ñ‹Ð±ÐµÑ€Ð¸Ñ‚Ðµ Ñ‚ÐµÐºÑÑ‚Ð¾Ð²Ñ‹Ð¹ ÑˆÐ°Ð±Ð»Ð¾Ð½ (1-" << pattern.contents.size() << "): ";
     choice = Out_of_range::out_of_range(pattern.contents.size());
-    pattern.showTemplate(choice);
+
+    media.local_path = pattern.showTemplate(choice);
+    if(media.local_path != "")
+    {
+        media.distributing(media.local_path);
+    }
 }
 
 
 void image() {
     T_Image pattern;
+    Social_Media media ("");
+
     int choice;
-    cout << "Âûáåðèòå èçîáðàæåíèå (1-" << pattern.contents.size() << "): ";
+    cout << "Ð’Ñ‹Ð±ÐµÑ€Ð¸Ñ‚Ðµ Ð¸Ð·Ð¾Ð±Ñ€Ð°Ð¶ÐµÐ½Ð¸Ðµ (1-" << pattern.contents.size() << "): ";
     choice = Out_of_range::out_of_range(pattern.contents.size());
-    cout << "Âûâîä èçîáðàæåíèÿ.\n";
-    pattern.showTemplate(choice);
+
+    media.local_path = pattern.showTemplate(choice);
+    if(media.local_path != "")
+    {
+        media.distributing(media.local_path);
+    }
 }
 
 void templates() {
     while (true) {
-    cout << "\nÂâåäèòå æåëàåìûé òèï øàáëîíà: "
-            "\n1. Òåêñò;"
-            "\n2. Èçîáðàæåíèå;"
-            "\n0. Íàçàä." << endl;
+    cout << "\nÐ’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð¶ÐµÐ»Ð°ÐµÐ¼Ñ‹Ð¹ Ñ‚Ð¸Ð¿ ÑˆÐ°Ð±Ð»Ð¾Ð½Ð°: "
+            "\n1. Ð¢ÐµÐºÑÑ‚;"
+            "\n2. Ð˜Ð·Ð¾Ð±Ñ€Ð°Ð¶ÐµÐ½Ð¸Ðµ;"
+            "\n0. ÐÐ°Ð·Ð°Ð´." << endl;
 
         int choice;
         cin >> choice;
@@ -127,7 +155,7 @@ void templates() {
             case 0:
                 return;
             default:
-                cout << "×èñëî âíå âàðèàíòîâ. Ïîâòîðèòå ââîä: ";
+                cout << "Ð§Ð¸ÑÐ»Ð¾ Ð²Ð½Ðµ Ð²Ð°Ñ€Ð¸Ð°Ð½Ñ‚Ð¾Ð². ÐŸÐ¾Ð²Ñ‚Ð¾Ñ€Ð¸Ñ‚Ðµ Ð²Ð²Ð¾Ð´: ";
                 break;
         }
     }

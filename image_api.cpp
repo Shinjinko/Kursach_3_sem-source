@@ -5,6 +5,7 @@
 #include <vector>
 #include <C:\Users\HONOR\.vcpkg-clion\installed\x64-mingw-dynamic\include\openssl\evp.h>
 #include <algorithm>
+#include "image_api.h"
 using namespace std;
 
 std::string cleanBase64String(const std::string& encoded)
@@ -80,11 +81,11 @@ int Image_Api(const std::string& prompt) {
             std::vector<unsigned char> imageData = base64Decode(cleanBase64);
 
             // Сохраняем изображение в файл в формате JPEG
-            std::ofstream imageFile("output.jpg", std::ios::binary); // Сохраняем как JPEG
+            std::ofstream imageFile(GENERATE_JOKES_PHOTO_OUTPUT, std::ios::binary); // Сохраняем как JPEG
             imageFile.write(reinterpret_cast<const char*>(imageData.data()), imageData.size());
             imageFile.close();
 
-            std::cout << "Image saved as output.jpg" << std::endl;
+            std::cout << "Изображение сохранено!\n" << std::endl;
         }
 
         curl_easy_cleanup(hnd);

@@ -1,34 +1,21 @@
-#ifndef KURSACH_SOCIAL_MEDIA_H
-#define KURSACH_SOCIAL_MEDIA_H
+#ifndef SOCIAL_MEDIA_H
+#define SOCIAL_MEDIA_H
 #include <string>
+#include <iostream>
+#include "Exp.h"
 
-using namespace std;
+#define BOT_TG "https://t.me/mgen_429_bot"
+#define BOT_VK ""
 
 class Social_Media
 {
-private:
-    string account_bot;
-    string local_path;
-    int user_id;
+protected:
+    std::string account_bot;
 public:
-    virtual void distributing (){}
+    std::string local_path;
+
+    Social_Media(const std::string file_name) : local_path(file_name) {}
+
+    virtual void distributing (std::string file_name);
 };
-
-class Telegram : public Social_Media
-{
-public:
-    void distributing() override
-    {
-
-    }
-};
-
-class VK : public Social_Media
-{
-public:
-    void distributing() override
-    {
-
-    }
-};
-#endif //KURSACH_SOCIAL_MEDIA_H
+#endif //SOCIAL_MEDIA_H

@@ -1,25 +1,22 @@
 #include <iostream>
-#include <string>
 #include "functions.h"
 #include "Meme_Gen.h"
 #include "Exp.h"
-using namespace std;
 
-int main()
-{
-    setlocale(LC_ALL, "Russian");
+int main() {
+    system("chcp 65001");
+
     Meme_Gen Generation;
-    cout << "Добро пожаловать в генератор мемов! Выберите нужную функцию:\n";
 
-    while(true)
-    {
-        cout << "1. Выбор шаблона;\n"
-                "2. Генерация фото и текста;\n"
-                "0. Выйти.";
+    std::cout << "Р”РѕР±СЂРѕ РїРѕР¶Р°Р»РѕРІР°С‚СЊ РІ РіРµРЅРµСЂР°С‚РѕСЂ РјРµРјРѕРІ! Р’С‹Р±РµСЂРёС‚Рµ РЅСѓР¶РЅСѓСЋ С„СѓРЅРєС†РёСЋ:\n";
+
+    while (true) {
+        std::cout << "1. Р’С‹Р±РѕСЂ С€Р°Р±Р»РѕРЅР°;\n"
+                     "2. Р“РµРЅРµСЂР°С†РёСЏ С„РѕС‚Рѕ Рё С‚РµРєСЃС‚Р°;\n"
+                     "0. Р’С‹Р№С‚Рё.";
         int choise = 0;
 
-        switch (Numbers::check_input())
-        {
+        switch (Numbers::check_input()) {
             case 1:
                 Generation.setType(choise);
                 templates();
@@ -29,12 +26,11 @@ int main()
                 custom();
                 break;
             case 0:
-                cout << "До скорых встреч!\n";
+                std::cout << "Р”Рѕ СЃРєРѕСЂС‹С… РІСЃС‚СЂРµС‡!\n";
                 exit(0);
             default:
-                cout << "Попробуйте ещё раз: \n";
+                std::cout << "РџРѕРїСЂРѕР±СѓР№С‚Рµ РµС‰С‘ СЂР°Р·: \n";
                 break;
         }
-//    TODO:добавить условие на существование текста или изображения    cout << "Отправить творение в социальную сеть Telegram/Vk?";
     }
 }

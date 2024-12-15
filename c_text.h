@@ -2,60 +2,37 @@
 #define KURSACH_C_TEXT_H
 #include <iostream>
 #include <string>
-#include <opencv2/core/types.hpp>
+#include <opencv2/core/types_c.h>
+#include <opencv2/core/core.hpp>
 #include "custom.h"
-
+#include <fstream>
+#include <unordered_map>
+#include "Exp.h"
+#define GENERATE_JOKES_TEXT_OUTPUT R"(D:\Proga\Turovec\Kursach\Meme Generator\custom\jokes_output.txt)"
 
 class C_Text : public virtual Custom {
 public:
     std::string getMemeText() const;
     void setMemeText(const std::string& text) const;
 
-    void apply_settings() override {
-        std::cout << "Применение настроек для изображения." << std::endl;
-    }
-    void generate_meme() override {
-        std::string prompt = "Helen";
-//TODO: нормально вызвать функцию генерации текста
-        std::string response;
-        std::cin >> response;
-
-        std::cout << "Final Answer: " << response << std::endl;
-    }
+    std::string generate_meme() override;
 
     mutable std::string text_pattern;
 };
 
 class T_Settings : public C_Text {
-private:
-    std::string text_background;
-    std::string text_font;
 public:
-    std::string text_color;
+    cv::Scalar text_color;
     int font_size;
 
-    const std::string getTextColor() const ;
-    void setTextColor(std::string color);
-
-    const std::string &getTextFont() const;
-    void setTextFont(const std::string& font);
+    cv::Scalar getTextColor() const;
+    void setTextColor(std::string color_name);
 
     int getFontSize() const;
     void setFontSize(int size);
 
-    const std::string &getTextBackground() const;
-    void setTextBackground(const std::string &textBackground);
+    T_Settings() : text_color(0, 0, 0), font_size(12) {}
 
-    T_Settings() : text_color(""), text_font(""), text_background(""), font_size(12) {}
-
-    void apply_settings() override{
-        //Добавить возможность возврата
-    }
-
-    void generate_meme() override {
-        apply_settings();
-        C_Text::generate_meme();
-        //привязать
-    }
+    std::string generate_meme() override;
 };
 #endif //KURSACH_C_TEXT_H

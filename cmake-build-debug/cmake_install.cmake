@@ -1,4 +1,4 @@
-# Install script for directory: D:/Proga/Turovec/I_want_fix_this
+# Install script for directory: D:/Proga/Turovec/Kursach/Meme Generator/sourse
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -45,5 +45,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "D:/Proga/Turovec/I_want_fix_this/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "D:/Proga/Turovec/Kursach/Meme Generator/sourse/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

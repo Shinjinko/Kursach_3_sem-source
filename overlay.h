@@ -2,9 +2,8 @@
 #define KURSACH_OVERLAY_H
 #include "c_text.h"
 #include "c_image.h"
-
-class I_Settings;
-class T_Settings;
+#include <windows.h>
+#include <unordered_map>
 
 class Overlay : public I_Settings, public T_Settings
 {
@@ -15,12 +14,13 @@ public:
         text_pattern = "";
     }
 
-    void generate_meme() override {}
-
-    void apply_settings() override {}
+    std::string generate_meme() override
+    { return "";}
 
     void do_overlay (Overlay& overlay);
 
     ~Overlay() override = default;
 };
+
+std::string read_file_string(const std::string& filePath);
 #endif //KURSACH_OVERLAY_H

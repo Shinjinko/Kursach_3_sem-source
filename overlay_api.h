@@ -1,7 +1,12 @@
 #ifndef TESTAPIOVERLAY_OVERLAY_H
 #define TESTAPIOVERLAY_OVERLAY_H
 #include <iostream>
-#include <C:\Users\HONOR\.vcpkg-clion\installed\x64-mingw-dynamic\include\opencv3\opencv2\opencv.hpp>
+#include <opencv2/core/types_c.h>
+#include <opencv2/core/core.hpp>
+#include <opencv2/highgui/highgui.hpp>
+
+#define FILENAME_OVERLAY R"(D:\Proga\Turovec\Kursach\Meme Generator\custom\overlay.jpg)"
+
 void addTextToImage(const std::string& imagePath, const std::string& text, int fontSize, const cv::Scalar& color) {
 
     cv::Mat image = cv::imread(imagePath);
@@ -21,6 +26,6 @@ void addTextToImage(const std::string& imagePath, const std::string& text, int f
 
     cv::putText(image, text, textOrg, fontFace, fontScale, color, thickness);
 
-    cv::imwrite(R"(D:\Proga\Turovec\Kursach\Templates\output.jpg)", image);
+    cv::imwrite(FILENAME_OVERLAY, image);
 }
 #endif //TESTAPIOVERLAY_OVERLAY_H

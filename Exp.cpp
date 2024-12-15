@@ -2,7 +2,6 @@
 #include <iostream>
 #include <string>
 #include "generate_text.h"
-#include "custom.h"
 #include "overlay.h"
 using namespace std;
 
@@ -13,19 +12,19 @@ int Numbers::check_input() {
     int answer;
 
     if (setjmp(jumpBuffer) != 0) {
-        cerr << "Попробуйте снова." << endl;
+        cerr << "РџРѕРїСЂРѕР±СѓР№С‚Рµ СЃРЅРѕРІР°." << endl;
     }
 
-    cout << "\nВведите число: ";
+    cout << "\nР’РІРµРґРёС‚Рµ С‡РёСЃР»Рѕ: ";
     cin >> number;
 
     try {
         answer = stoi(number);
     } catch (const invalid_argument& e) {
-        cerr << "Ошибка: введённое значение не является числом." << endl;
+        cerr << "РћС€РёР±РєР°: РІРІРµРґС‘РЅРЅРѕРµ Р·РЅР°С‡РµРЅРёРµ РЅРµ СЏРІР»СЏРµС‚СЃСЏ С‡РёСЃР»РѕРј." << endl;
         longjmp(jumpBuffer, 1);
     } catch (const out_of_range& e) {
-        cerr << "Ошибка: введённое число выходит за пределы допустимого диапазона." << endl;
+        cerr << "РћС€РёР±РєР°: РІРІРµРґС‘РЅРЅРѕРµ С‡РёСЃР»Рѕ РІС‹С…РѕРґРёС‚ Р·Р° РїСЂРµРґРµР»С‹ РґРѕРїСѓСЃС‚РёРјРѕРіРѕ РґРёР°РїР°Р·РѕРЅР°." << endl;
         longjmp(jumpBuffer, 1);
     }
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
@@ -39,7 +38,7 @@ int Out_of_range::out_of_range(int size)
     try
     {
         if (index < 1 || index > size)
-            throw string("\nОшибка: введённое число выходит за пределы допустимого диапазона. Ввод округлён до ближайшей границы диапазона.\n");
+            throw string("\nРћС€РёР±РєР°: РІРІРµРґС‘РЅРЅРѕРµ С‡РёСЃР»Рѕ РІС‹С…РѕРґРёС‚ Р·Р° РїСЂРµРґРµР»С‹ РґРѕРїСѓСЃС‚РёРјРѕРіРѕ РґРёР°РїР°Р·РѕРЅР°. Р’РІРѕРґ РѕРєСЂСѓРіР»С‘РЅ РґРѕ Р±Р»РёР¶Р°Р№С€РµР№ РіСЂР°РЅРёС†С‹ РґРёР°РїР°Р·РѕРЅР°.\n");
     }
     catch (string& error_message)
     {
@@ -65,18 +64,63 @@ std::string Check_server_answer::validate_and_resend(const std::string& prompt, 
         }
     }
 
-    std::cerr << "Max attempts reached. Could not get a valid response." << std::endl; // Если не удалось получить корректный ответ
+    std::cerr << "Max attempts reached. Could not get a valid response." << std::endl; // Р•СЃР»Рё РЅРµ СѓРґР°Р»РѕСЃСЊ РїРѕР»СѓС‡РёС‚СЊ РєРѕСЂСЂРµРєС‚РЅС‹Р№ РѕС‚РІРµС‚
     return "Error: Failed after multiple attempts.";
 }
 
 void Overlay_validator::validate_overlay_data(Overlay& overlay)
 {
+    C_Text text;
+    T_Settings text_w_sett;
+    I_Settings image;
+    bool exit = false;
+
     if (overlay.getLocalPath() == "") {
-        cerr << "Изображение не задано! Запускается генерация.\n";
-        overlay.setLocalPath(c_image());
+        cerr << "РР·РѕР±СЂР°Р¶РµРЅРёРµ РЅРµ Р·Р°РґР°РЅРѕ! Р—Р°РїСѓСЃРєР°РµС‚СЃСЏ РіРµРЅРµСЂР°С†РёСЏ.\n";
+        overlay.setLocalPath(image.generate_meme());
     }
     if (overlay.getMemeText() == "") {
-        cerr << "Текст не задан! Запускается генерация.\n";
-        overlay.setMemeText(c_text());
+        cerr << "РўРµРєСЃС‚ РЅРµ Р·Р°РґР°РЅ! Р—Р°РїСѓСЃРєР°РµС‚СЃСЏ РіРµРЅРµСЂР°С†РёСЏ.\n";
+        overlay.setMemeText(text.generate_meme());
+        text_w_sett.generate_meme();
+        overlay.text_color = text_w_sett.text_color;
+        overlay.font_size = text_w_sett.font_size;
+    }
+    if (overlay.font_size == 12)
+    {
+        text_w_sett.generate_meme();
+        overlay.text_color = text_w_sett.text_color;
+        overlay.font_size = text_w_sett.font_size;
+    }
+
+    while (!exit) {
+
+        cout << "Р–РµР»Р°РµС‚Рµ РїСЂРѕРґРѕР»Р¶РёС‚СЊ РЅР°Р»РѕР¶РµРЅРёРµ?\n"
+                "1. РР·РјРµРЅРёС‚СЊ С‚РµРєСЃС‚;\n"
+                "2. РР·РјРµРЅРёС‚СЊ С„РѕС‚Рѕ;\n"
+                "3. РџСЂРѕРґРѕР»Р¶РёС‚СЊ;\n"
+                "0. Р’С‹Р№С‚Рё.\n";
+
+        switch (Numbers::check_input()) {
+            case 1:
+                overlay.setLocalPath(text.generate_meme());
+                break;
+            case 2:
+                overlay.setMemeText(image.generate_meme());
+                text_w_sett.generate_meme();
+                overlay.text_color = text_w_sett.text_color;
+                overlay.font_size = text_w_sett.font_size;
+                break;
+            case 3:
+                exit = true;
+                break;
+            case 0:
+                return;
+            default:
+                cout << "РќРµ РІРµСЂРЅРѕ РЅР°Р±СЂР°РЅ РІС‹Р±РѕСЂ. РџРѕРїСЂРѕР±СѓР№С‚Рµ СЃРЅРѕРІР°.";
+                break;
+
+        }
     }
 }
+

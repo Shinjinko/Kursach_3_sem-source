@@ -2,6 +2,8 @@
 #define KURSACH_CUSTOM_H
 #include "Meme_Gen.h"
 #include <string>
+#include <windows.h>
+#include "social_media.h"
 
 
 class Custom : public Meme_Gen {
@@ -16,12 +18,9 @@ public:
 
     void setMemeType(int type);
 
-    virtual void generate_meme() = 0;
+    virtual std::string generate_meme() = 0;
 
-    virtual void apply_settings() = 0;
 };
 
-std::string c_image();
-std::string c_text();
 void overlay();
 #endif //KURSACH_CUSTOM_H

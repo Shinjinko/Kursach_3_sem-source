@@ -5,11 +5,14 @@
 #include <iostream>
 #include "image_api.h"
 #include "Exp.h"
-
-
+#include "last_action.h"
+#define GENERATE_JOKES_PHOTO_OUTPUT R"(D:\Proga\Turovec\Kursach\Meme Generator\custom\image.jpg)"
 
 class C_Image : public virtual Custom {
 public:
+    
+    std::string image_pattern;
+    mutable std::string local_path_image;
 
     C_Image() : image_pattern(""), local_path_image("") {};
 
@@ -27,9 +30,6 @@ public:
 
     void set_pattern(const std::string &line);
 
-    std::string image_pattern;
-    mutable std::string local_path_image;
-
     std::string getLocalPath() const { return local_path_image; }
     void setLocalPath(const std::string& path) const { local_path_image = path; }
 
@@ -45,42 +45,25 @@ public:
     void setImageColor(const std::string& color);
 
 
-    I_Settings() : image_color(""), image_background("") {}
+    I_Settings() : image_background(""), image_color("") {}
 
-    I_Settings(const C_Image& base)
-            : C_Image(base), // Копируем данные базового класса
-              image_background(""), // Устанавливаем значения по умолчанию для новых полей
-              image_color("") {}
-
-    // Конструктор копирования (на случай копирования I_Settings)
     I_Settings(const I_Settings& other)
             : C_Image(other),
               image_background(other.image_background),
               image_color(other.image_color) {}
 
-    // Оператор присваивания для полноты
     I_Settings& operator=(const I_Settings& other) {
         if (this == &other)
             return *this;
 
-        C_Image::operator=(other); // Копируем базовый класс
+        C_Image::operator=(other);
         image_background = other.image_background;
         image_color = other.image_color;
 
         return *this;
     }
 
-    void apply_settings() override{
-
-    }
-
-    void generate_meme() override {
-        std::string fullPrompt = image_pattern +
-                                 ", background: " + image_background +
-                                 ", main color: " + image_color;
-
-        Image_Api(fullPrompt);
-    }
+    std::string generate_meme() override;
 
     std::string getBackgroundColor() const;
     void setBackgroundColor(const std::string& color);
