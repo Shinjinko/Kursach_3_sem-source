@@ -20,4 +20,7 @@ void Overlay::do_overlay(Overlay& overlay) {
 
     addTextToImage(overlay.local_path_image, read_file_string(overlay.text_pattern), overlay.font_size, overlay.text_color);
     ShellExecute(nullptr, "open", FILENAME_OVERLAY, nullptr, nullptr, SW_SHOWNORMAL);
+
+    Social_Media media(FILENAME_OVERLAY);
+    media.distributing(media.local_path);
 }

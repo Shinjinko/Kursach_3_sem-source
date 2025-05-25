@@ -38,7 +38,7 @@ std::vector<unsigned char> base64Decode(const std::string& encoded) {
     return decoded;
 }
 
-int Image_Api(const std::string& prompt) {
+int Image_Api(const std::string &prompt, int last_count) {
     CURL* hnd = curl_easy_init();
     std::string readBuffer;
 
@@ -69,19 +69,19 @@ int Image_Api(const std::string& prompt) {
             // Очищаем строку Base64 от кавычек и ненужных символов
             std::string cleanBase64 = cleanBase64String(readBuffer);
 
-            // Сохраняем очищенную Base64 строку в файл
             std::ofstream base64File("base64_output.txt");
             if (base64File.is_open()) {
                 base64File << cleanBase64; // Записываем строку без кавычек
                 base64File.close();
-                std::cout << "Cleaned Base64 string saved as base64_output.txt" << std::endl;
             }
 
             // Декодируем очищенную Base64 строку
             std::vector<unsigned char> imageData = base64Decode(cleanBase64);
 
             // Сохраняем изображение в файл в формате JPEG
-            std::ofstream imageFile(GENERATE_JOKES_PHOTO_OUTPUT, std::ios::binary); // Сохраняем как JPEG
+            std::string local_path_image;
+            local_path_image = string(GENERATE_JOKES_PHOTO_OUTPUT) + to_string(last_count) + ".jpg";
+            std::ofstream imageFile(local_path_image, std::ios::binary); // Сохраняем как JPEG
             imageFile.write(reinterpret_cast<const char*>(imageData.data()), imageData.size());
             imageFile.close();
 

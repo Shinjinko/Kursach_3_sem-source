@@ -40,7 +40,19 @@ std::string openFile(const std::deque<GeneratedItem>& history) {
     } else {
         std::cout << "Неверный выбор элемента.\n";
     }
+
     return "";
+}
+
+std::string getNewFileName(const std::string& oldPath, size_t newIndex) {
+    // Функция для изменения имени файла с учётом нового индекса
+    std::filesystem::path path(oldPath);
+    std::string extension = path.extension().string();  // Получаем расширение файла
+    std::string baseName = path.stem().string();  // Получаем имя без расширения
+
+    // Извлекаем новый индекс и формируем новый путь
+    std::string newFileName = baseName.substr(0, baseName.size() - 1) + std::to_string(newIndex) + extension;
+    return (path.parent_path() / newFileName).string();
 }
 
 void deleteFile(std::deque<GeneratedItem>& history, const std::string& historyFile) {
@@ -50,14 +62,34 @@ void deleteFile(std::deque<GeneratedItem>& history, const std::string& historyFi
 
     if (index > 0 && index <= history.size()) {
         auto it = history.begin() + (index - 1);
+
+        // Удаляем файл
         if (std::filesystem::exists(it->file_path)) {
             std::filesystem::remove(it->file_path);
         } else {
             std::cout << "Файл не найден: " << it->file_path << "\n";
         }
+
+        // Удаляем элемент из истории
         history.erase(it);
+
+        // Переименовываем остальные файлы с изменением индекса
+        for (size_t i = index - 1; i < history.size(); ++i) {
+            std::string oldPath = history[i].file_path;
+            std::string newPath = getNewFileName(oldPath, i);  // Функция для получения нового пути с обновлённым индексом
+
+            // Переименование файла
+            if (std::filesystem::exists(oldPath)) {
+                std::filesystem::rename(oldPath, newPath);
+            }
+
+            // Обновляем путь в истории
+            history[i].file_path = newPath;
+        }
+
+        // Сохраняем обновлённую историю
         saveHistory(history, historyFile);
-        std::cout << "Элемент удалён.\n";
+        std::cout << "Элемент удалён и файлы переименованы.\n";
     } else {
         std::cout << "Неверный выбор элемента.\n";
     }
@@ -79,7 +111,8 @@ std::string showHistory(std::deque<GeneratedItem>& history, const std::string& h
         std::cout << "\nМеню:\n"
                      "1. Выбрать элемент для открытия;\n"
                      "2. Удалить элемент;\n"
-                     "Ваш выбор: ";
+                     "3. Показать список;\n"
+                     "0. Назад.\n";
 
         switch (Numbers::check_input()) {
             case 1:
@@ -87,6 +120,13 @@ std::string showHistory(std::deque<GeneratedItem>& history, const std::string& h
             case 2:
                 deleteFile(history, historyFile);
                 break;
+            case 3:
+                for (size_t i = 0; i < history.size(); ++i) {
+                    std::cout << i + 1 << ". " << history[i].prompt << " - " << history[i].file_path << "\n";
+                }
+                break;
+            case 0:
+                return "";
             default:
                 std::cout << "Неверный выбор.\n";
         }

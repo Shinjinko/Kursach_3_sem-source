@@ -5,7 +5,7 @@
 #include "Exp.h"
 
 #define BOT_TG "https://t.me/mgen_429_bot"
-#define BOT_VK ""
+#define BOT_VK "https://vk.com/mgen_429_bot"
 
 class Social_Media
 {

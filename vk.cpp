@@ -3,154 +3,236 @@
 #include <string>
 #include <curl/curl.h>
 #include <nlohmann/json.hpp>
+#include <fstream>
 #include "social_media.h"
 
 using json = nlohmann::json;
 
-const std::string TOKEN = "vk1.a.xxz38-GHx8f36ZrPM7prAR0jNu_RG_HPpxyT6vrLIQigrM-5Q_2kD9buezi0BgoRYsfxuxV5nItsosC3bOoaOE40i3EBIKrOocAKEOv7oeWM2SbRd1LRyETveRcDzHQwGCIcf9ouGeORqMQLJqsRUVSTw2AGr_pY14J7bP6JUYbKLQPVGp0Te8DcoksJaz_FgYI_q3B0E5T4VE0sFuZYyA"; // Токен группы
-const std::string API_URL = "https://api.vk.com/method/";
-const std::string API_VERSION = "5.199";
+#define TOKEN "vk1.a.AVtg3pelTIqCerP5TzoUCEjJAPdJGk58IIWRWoU1uSAL0ejWhGIqiXkC3vsBT3FKqvJlgqpdXO5jBkYMH6t8J0MquqqkX_wo7H1EDCAbcbXwxPQGTL3HLm_xu6dTVyfZmRTYGMKLZdO53IKJ6poz7sOeqzqOjRcrHrYhzqXugUmlT2ueLzJ7Uy8zkGiMu6o9_9niEtY1HlheoA8TAjFC3w" // Токен группы
+#define API_URL "https://api.vk.com/method/"
+#define API_VERSION "5.199"
 
-std::string uploadPhoto(const std::string& filePath) {
-    // 1. Получаем URL сервера для загрузки
-    std::string getUrl = API_URL + "photos.getMessagesUploadServer?access_token=" + TOKEN + "&v=" + API_VERSION;
-    std::string response = httpRequest(getUrl);
+std::string getFileExtension_vk(const std::string& filePath) {
+    return std::filesystem::path(filePath).extension().string();
+}
+
+
+std::string readFileUtf8_vk(const std::string& filePath) {
+    std::ifstream file(filePath, std::ios::binary);
+    if (!file) {
+        throw std::runtime_error("Не удалось открыть файл: " + filePath);
+    }
+
+    std::ostringstream contents;
+    contents << file.rdbuf();
+    return contents.str();
+}
+
+// Функция для получения ID пользователей с непрочитанными сообщениями
+std::vector<int> getUnreadUserIds() {
+    std::vector<int> userIds;
+
+    // Запрос к API VK для получения непрочитанных сообщений
+    std::string url = std::string(API_URL) + "messages.getConversations?filter=unread&access_token=" +
+                      std::string(TOKEN) + "&v=" + std::string(API_VERSION);
+
+    std::string response = httpRequest(url);
 
     if (response.empty()) {
-        std::cerr << "Ошибка: Пустой ответ от API VK при получении upload_url!" << std::endl;
-        return "";
+        std::cerr << "Ошибка: Пустой ответ от API при запросе непрочитанных сообщений!" << std::endl;
+        return userIds;
     }
 
-    auto jsonResponse = json::parse(response);
-    if (!jsonResponse.contains("response") || !jsonResponse["response"].contains("upload_url")) {
-        std::cerr << "Ошибка API VK: Неполный ответ для upload_url: " << response << std::endl;
-        return "";
-    }
-    std::string uploadUrl = jsonResponse["response"]["upload_url"];
+    try {
+        auto jsonResponse = json::parse(response);
+        auto items = jsonResponse["response"]["items"];
 
-    // 2. Загружаем файл на сервер
-    CURL* curl;
-    CURLcode res;
-    curl_mime* mime;
-    curl_mimepart* part;
-    std::string serverResponse;
-
-    curl = curl_easy_init();
-    if (curl) {
-        mime = curl_mime_init(curl);
-        part = curl_mime_addpart(mime);
-        curl_mime_name(part, "file");
-        curl_mime_filedata(part, filePath.c_str());
-
-        curl_easy_setopt(curl, CURLOPT_URL, uploadUrl.c_str());
-        curl_easy_setopt(curl, CURLOPT_MIMEPOST, mime);
-        curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, [](void* contents, size_t size, size_t nmemb, void* userp) {
-            ((std::string*)userp)->append((char*)contents, size * nmemb);
-            return size * nmemb;
-        });
-        curl_easy_setopt(curl, CURLOPT_WRITEDATA, &serverResponse);
-
-        res = curl_easy_perform(curl);
-        if (res != CURLE_OK) {
-            std::cerr << "Ошибка загрузки файла: " << curl_easy_strerror(res) << std::endl;
+        // Проходим по всем диалогам и сохраняем user_id
+        for (const auto& item : items) {
+            if (item.contains("conversation") && item["conversation"].contains("peer")) {
+                int userId = item["conversation"]["peer"]["id"].get<int>();
+                userIds.push_back(userId);
+            }
         }
-
-        curl_easy_cleanup(curl);
-        curl_mime_free(mime);
+    } catch (const std::exception& e) {
+        std::cerr << "Ошибка обработки JSON: " << e.what() << std::endl;
     }
 
-    if (serverResponse.empty()) {
-        std::cerr << "Ошибка: Пустой ответ после загрузки файла!" << std::endl;
-        return "";
-    }
-
-    auto uploadJson = json::parse(serverResponse);
-    if (!uploadJson.contains("photo") || !uploadJson.contains("server") || !uploadJson.contains("hash")) {
-        std::cerr << "Ошибка API VK после загрузки файла: " << serverResponse << std::endl;
-        return "";
-    }
-    std::string photo = uploadJson["photo"];
-    std::string server = std::to_string(uploadJson["server"].get<int>());
-    std::string hash = uploadJson["hash"];
-
-    // 3. Сохраняем фото
-    std::string saveUrl = API_URL + "photos.saveMessagesPhoto?photo=" + curl_easy_escape(nullptr, photo.c_str(), 0) +
-                          "&server=" + server +
-                          "&hash=" + hash +
-                          "&access_token=" + TOKEN +
-                          "&v=" + API_VERSION;
-    std::string saveResponse = httpRequest(saveUrl);
-
-    if (saveResponse.empty()) {
-        std::cerr << "Ошибка: Пустой ответ при сохранении фото!" << std::endl;
-        return "";
-    }
-
-    auto saveJson = json::parse(saveResponse);
-    if (!saveJson.contains("response") || saveJson["response"].empty()) {
-        std::cerr << "Ошибка API VK при сохранении фото: " << saveResponse << std::endl;
-        return "";
-    }
-
-    auto photoObj = saveJson["response"][0];
-    return std::to_string(photoObj["owner_id"].get<int>()) + "_" + std::to_string(photoObj["id"].get<int>());
+    return userIds;
 }
 
 
-// Пример вызова для отправки фото
-void sendPhotoFromPath(int userId, const std::string& filePath) {
-    std::string photoId = uploadPhoto(filePath); // Загрузка фото
-    sendPhoto(userId, photoId); // Отправка фото
+size_t WriteCallback_vk(void* contents, size_t size, size_t nmemb, void* userp) {
+    size_t totalSize = size * nmemb;
+    std::string* response = static_cast<std::string*>(userp);
+    if (response) {
+        response->append(static_cast<char*>(contents), totalSize);
+    }
+    return totalSize;
 }
 
-// Функция для выполнения HTTP-запросов
+// Универсальная функция для выполнения HTTP-запросов
 std::string httpRequest(const std::string& url) {
-    CURL* curl;
-//    CURLcode res;
+    CURL* curl = curl_easy_init();
     std::string response;
 
-    curl = curl_easy_init();
     if (curl) {
         curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
-        curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, [](void* contents, size_t size, size_t nmemb, void* userp) {
-            ((std::string*)userp)->append((char*)contents, size * nmemb);
-            return size * nmemb;
-        });
+        curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback_vk);
         curl_easy_setopt(curl, CURLOPT_WRITEDATA, &response);
-//        res = curl_easy_perform(curl);
+
+        CURLcode res = curl_easy_perform(curl);
+        if (res != CURLE_OK) {
+            std::cerr << "Ошибка HTTP-запроса: " << curl_easy_strerror(res) << std::endl;
+        }
+
         curl_easy_cleanup(curl);
     }
     return response;
 }
 
-void sendMessage(int userId, const std::string& message) {
-    std::string url = API_URL + "messages.send?user_id=" + std::to_string(userId) +
-                      "&message=" + curl_easy_escape(nullptr, message.c_str(), 0) +
-                      "&access_token=" + TOKEN + "&v=" + API_VERSION;
-    httpRequest(url);
+// Функция для загрузки фотографии и получения её ID
+std::string uploadPhoto(const std::string& filePath) {
+    // Шаг 1: Получаем URL сервера для загрузки
+    std::string getUrl = std::string(API_URL) + "photos.getMessagesUploadServer?access_token=" + std::string(TOKEN) + "&v=" + std::string(API_VERSION);
+    std::string response = httpRequest( getUrl);
+
+    if (response.empty()) {
+        std::cerr << "Ошибка: Пустой ответ от API при запросе upload_url!" << std::endl;
+        return "";
+    }
+
+    try {
+        auto jsonResponse = json::parse(response);
+        std::string uploadUrl = jsonResponse["response"]["upload_url"];
+
+        // Шаг 2: Загружаем файл на сервер
+        CURL* curl = curl_easy_init();
+        std::string serverResponse;
+
+        if (curl) {
+            curl_mime* mime = curl_mime_init(curl);
+            curl_mimepart* part = curl_mime_addpart(mime);
+            curl_mime_name(part, "file");
+            curl_mime_filedata(part, filePath.c_str());
+
+            curl_easy_setopt(curl, CURLOPT_URL, uploadUrl.c_str());
+            curl_easy_setopt(curl, CURLOPT_MIMEPOST, mime);
+            curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback_vk);
+            curl_easy_setopt(curl, CURLOPT_WRITEDATA, &serverResponse);
+
+            CURLcode res = curl_easy_perform(curl);
+            if (res != CURLE_OK) {
+                std::cerr << "Ошибка загрузки файла: " << curl_easy_strerror(res) << std::endl;
+                curl_easy_cleanup(curl);
+                curl_mime_free(mime);
+                return "";
+            }
+
+            curl_easy_cleanup(curl);
+            curl_mime_free(mime);
+        }
+
+        if (serverResponse.empty()) {
+            std::cerr << "Ошибка: Пустой ответ после загрузки файла!" << std::endl;
+            return "";
+        }
+
+        // Шаг 3: Парсим ответ и сохраняем фото
+        auto uploadJson = json::parse(serverResponse);
+        std::string photo = uploadJson["photo"];
+        std::string server = std::to_string(uploadJson["server"].get<int>());
+        std::string hash = uploadJson["hash"];
+
+        std::string saveUrl = std::string(API_URL) + "photos.saveMessagesPhoto?photo=" + curl_easy_escape(nullptr, photo.c_str(), 0) +
+                              "&server=" + server +
+                              "&hash=" + hash +
+                              "&access_token=" + std::string(TOKEN) +
+                              "&v=" + std::string(API_VERSION);
+        std::string saveResponse = httpRequest(saveUrl);
+
+        auto saveJson = json::parse(saveResponse);
+        auto photoObj = saveJson["response"][0];
+        return std::to_string(photoObj["owner_id"].get<int>()) + "_" + std::to_string(photoObj["id"].get<int>());
+    } catch (const std::exception& e) {
+        std::cerr << "Ошибка обработки JSON: " << e.what() << std::endl;
+        return "";
+    }
 }
 
-void sendPhoto(int userId, const std::string& photoId) {
-    std::string url = API_URL + "messages.send?user_id=" + std::to_string(userId) +
-                      "&attachment=photo" + photoId +
-                      "&access_token=" + TOKEN + "&v=" + API_VERSION;
-    httpRequest(url);
+// Универсальная функция для отправки сообщений или фотографий
+void sendMessageOrPhoto(int userId, const std::string& message, const std::string& filePath = "") {
+    if (!filePath.empty()) {
+        // Если указан файл, загружаем фото
+        std::string photoId = uploadPhoto(filePath);
+        if (!photoId.empty()) {
+            // Отправляем фото
+            for (int i = 0; i < 1; i++) {
+                std::string url = std::string(API_URL) + "messages.send?user_id=" + std::to_string(userId) +
+                                  "&attachment=photo" + photoId +
+                                  "&random_id=" + std::to_string(rand()) +
+                                  "&access_token=" + std::string(TOKEN) + "&v=" + std::string(API_VERSION);
+                httpRequest(url);
+            }
+        } else {
+            std::cerr << "Ошибка при загрузке фото. Отправка отменена." << std::endl;
+        }
+    }
+    if (!message.empty()) {
+        // Отправляем текст
+        for (int i = 0; i < 1; i++) {
+            std::string url = std::string(API_URL) + "messages.send?user_id=" + std::to_string(userId) +
+                              "&message=" + curl_easy_escape(curl_easy_init(), message.c_str(), 0) +
+                              "&random_id=" + std::to_string(rand() + i) + // Уникальный random_id
+                              "&access_token=" + std::string(TOKEN) + "&v=" + std::string(API_VERSION);
+            httpRequest(url);
+        }
+    }
 }
+
 
 void VK::distributing(std::string file_name)
 {
     VK vk(file_name);
     vk.account_bot = BOT_VK;
-    int userId = 273847885;
-    std::string message = "Это тестовое сообщение!";
 
     std::cout << "Бот запущен..." << std::endl;
 
-    sendMessage(userId, message);
+    // Получаем ID пользователей с непрочитанными сообщениями
+    std::cout << "Напишите сообщение боту: " << vk.account_bot << std::endl;
+    std::vector<int> userIds = getUnreadUserIds();
 
-    std::string filePath = R"(D:\\Proga\\Turovec\\Kursach\\Meme Generator\\templates\\photo\\2.jpg)";
-    sendPhotoFromPath(userId, filePath);
+    while (userIds.empty())
+    {
+        userIds = getUnreadUserIds();
+    }
+
+    try {
+        // Определяем расширение файла
+        std::string extension = getFileExtension_vk(file_name);
+
+        if (extension == ".txt") {
+            std::string message = readFileUtf8_vk(file_name);
+
+            for (int userId : userIds) {
+                sendMessageOrPhoto(userId, message); // Отправляем текстовое сообщение
+                std::cout << "Текстовое сообщение отправлено! " << std::endl;
+            }
+        }
+        else if (extension == ".jpg" || extension == ".jpeg" || extension == ".png") {
+            for (int userId : userIds) {
+                sendMessageOrPhoto(userId, "", file_name); // Отправляем фото
+                std::cout << "Фото отправлено!" << std::endl;
+            }
+        }
+        else {
+            std::cerr << "Ошибка: неподдерживаемый формат файла - " << extension << std::endl;
+        }
+    } catch (const std::exception& e) {
+        std::cerr << "Ошибка: " << e.what() << std::endl;
+    }
 }
+
 
 VK::~VK() {
 

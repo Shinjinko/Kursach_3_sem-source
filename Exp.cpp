@@ -82,40 +82,46 @@ void Overlay_validator::validate_overlay_data(Overlay& overlay)
     if (overlay.getMemeText() == "") {
         cerr << "Текст не задан! Запускается генерация.\n";
         overlay.setMemeText(text.generate_meme());
-        text_w_sett.generate_meme();
-        overlay.text_color = text_w_sett.text_color;
-        overlay.font_size = text_w_sett.font_size;
+        if(text_w_sett.generate_meme() != "")
+        {
+            overlay.text_color = text_w_sett.text_color;
+            overlay.font_size = text_w_sett.font_size;
+            text_w_sett.change = true;
+        }
     }
-    if (overlay.font_size == 12)
-    {
-        text_w_sett.generate_meme();
-        overlay.text_color = text_w_sett.text_color;
-        overlay.font_size = text_w_sett.font_size;
-    }
+    if (!text_w_sett.change)
+        cout << "Внимание! Настройки для текста заданы по умолчанию! (цвет - чёрный, размер - 12 пт)\n";
 
     while (!exit) {
 
         cout << "Желаете продолжить наложение?\n"
                 "1. Изменить текст;\n"
-                "2. Изменить фото;\n"
-                "3. Продолжить;\n"
+                "2. Изменить параметры текста;\n"
+                "3. Изменить фото;\n"
+                "4. Продолжить;\n"
                 "0. Выйти.\n";
 
         switch (Numbers::check_input()) {
             case 1:
-                overlay.setLocalPath(text.generate_meme());
-                break;
-            case 2:
-                overlay.setMemeText(image.generate_meme());
+                overlay.setMemeText(text.generate_meme());
                 text_w_sett.generate_meme();
                 overlay.text_color = text_w_sett.text_color;
                 overlay.font_size = text_w_sett.font_size;
                 break;
+            case 2:
+                text_w_sett.generate_meme();
+                overlay.text_color = text_w_sett.text_color;
+                overlay.font_size = text_w_sett.font_size;
+                text_w_sett.change = true;
+                break;
             case 3:
+                overlay.setLocalPath(image.generate_meme());
+                break;
+            case 4:
+                return;
+            case 0:
                 exit = true;
                 break;
-            case 0:
-                return;
             default:
                 cout << "Не верно набран выбор. Попробуйте снова.";
                 break;

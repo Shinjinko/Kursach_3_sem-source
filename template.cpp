@@ -9,14 +9,14 @@
 #include "Meme_Gen.h"
 #include "Exp.h"
 #include "social_media.h"
-namespace fs = std::filesystem;
+#include "last_action.h"
 
 #define FILENAME_JOKES R"(D:\Proga\Turovec\Kursach\Meme Generator\templates\text\jokes.txt)"
 #define FILENAME_JOKES_OUTPUT R"(D:\Proga\Turovec\Kursach\Meme Generator\templates\text\jokes_output.txt)"
 #define FILENAME_IMAGE_PATH R"(D:\Proga\Turovec\Kursach\Meme Generator\templates\photo)"
 
-
 using namespace std;
+namespace fs = std::filesystem;
 
 template <typename T>
 class Template : public Meme_Gen {
@@ -120,7 +120,6 @@ void text() {
     }
 }
 
-
 void image() {
     T_Image pattern;
     Social_Media media ("");
@@ -136,21 +135,75 @@ void image() {
     }
 }
 
-void templates() {
+void local()
+{
     while (true) {
-    cout << "\nВведите желаемый тип шаблона: "
-            "\n1. Текст;"
-            "\n2. Изображение;"
-            "\n0. Назад." << endl;
+        cout << "Тип выводимого локального мема:\n"
+                "1. Изображение;\n"
+                "2. Текст;\n"
+                "0. Назад.\n";
 
-        int choice;
-        cin >> choice;
-        switch (choice) {
+        switch (Numbers::check_input()) {
             case 1:
-                text();
+                image();
                 break;
             case 2:
-                image();
+                text();
+                break;
+            case 0:
+                return;
+            default:
+                cout << "Неверное число. Повторите попытку: ";
+                break;
+        }
+    }
+}
+
+void generated()
+{
+    Social_Media media("");
+    GeneratedItem gen;
+    auto img = gen.loadHistory(HISTORY_FILE_IMAGES);
+    auto text = gen.loadHistory(HISTORY_FILE_TEXTS);
+
+    while (true) {
+        cout << "Тип выводимого ранее сгенерированного мема:\n"
+                "1. Изображение;\n"
+                "2. Текст;\n"
+                "0. Назад.\n";
+
+        switch (Numbers::check_input()) {
+            case 1:
+                media.local_path = showHistory(img, HISTORY_FILE_IMAGES);
+                if (media.local_path != "") media.distributing(media.local_path);
+                break;
+            case 2:
+                media.local_path = showHistory(text, HISTORY_FILE_TEXTS);
+                if (media.local_path != "") media.distributing(media.local_path);
+                break;
+            case 0:
+                return;
+            default:
+                cout << "Неверное число. Повторите попытку: ";
+                break;
+        }
+    }
+}
+
+void templates()
+{
+    while (true) {
+    cout << "\nВведите желаемый тип шаблона: "
+            "\n1. Локальный;"
+            "\n2. Ранее сгенерированный;"
+            "\n0. Назад." << endl;
+
+        switch (Numbers::check_input()) {
+            case 1:
+                local();
+                break;
+            case 2:
+                generated();
                 break;
             case 0:
                 return;

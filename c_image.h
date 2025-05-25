@@ -6,7 +6,7 @@
 #include "image_api.h"
 #include "Exp.h"
 #include "last_action.h"
-#define GENERATE_JOKES_PHOTO_OUTPUT R"(D:\Proga\Turovec\Kursach\Meme Generator\custom\image.jpg)"
+#define GENERATE_JOKES_PHOTO_OUTPUT R"(D:\Proga\Turovec\Kursach\Meme Generator\custom\image)"
 
 class C_Image : public virtual Custom {
 public:

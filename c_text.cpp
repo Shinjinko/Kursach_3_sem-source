@@ -48,68 +48,94 @@ std::string T_Settings::generate_meme()
     } else {
         setTextColor("black");
         setFontSize(10);
+        return "";
     }
-    return "";
+    return " ";
 }
 
 std::string C_Text::generate_meme()
 {
     GeneratedItem last;
-    auto img = last.loadHistory(HISTORY_FILE_TEXTS);
+    auto text = last.loadHistory(HISTORY_FILE_TEXTS);
+    bool exit = false;
 
     Social_Media media("");
 
-    std::cout << "Введите текст для генерации или используйте ранее сгенерированные: \n"
-                "1. Генерировать;\n"
-                "2. Открыть историю.\n";
-    if (Numbers::check_input() == 2)
+    while (!exit)
     {
-        return showHistory(img, HISTORY_FILE_TEXTS);
-    }
-    std::cout << "Введите промт: ";
-    std::getline(std::cin, text_pattern);
+        std::cout << "Введите текст для генерации или используйте ранее сгенерированные: \n"
+                     "1. Генерировать;\n"
+                     "2. Открыть историю.\n"
+                     "0. Назад.\n";
+        switch (Numbers::check_input()) {
+            case 1:
+            {
+                std::cout << "Введите промт: ";
+                std::getline(std::cin, text_pattern);
 
-    while (true) {
-        std::cout << "1. Изменить текст;\n"
-                  << "0. Далее.\n";
+                while(!exit)
+                {
+                    std::cout << "1. Изменить запрос;\n"
+                                 "0. Далее.\n";
 
-        if (Numbers::check_input()) {
-            std::cout << "Введите новый текст: ";
-            std::getline(std::cin, text_pattern);
-        } else {
-            break;
+                    switch (Numbers::check_input()) {
+                        case 1:
+                            std::cout << "Введите новый текст: ";
+                            std::getline(std::cin, text_pattern);
+                            break;
+                        case 0:
+                            exit = true;
+                            break;
+                        default:
+                            std::cout << "Не верный выбор. Попробуйте снова.\n";
+                            break;
+                    }
+                }
+
+                std::cout << "Отправка запроса с данными:\n" << text_pattern << std::endl;
+
+                std::string generatedText = Check_server_answer::validate_and_resend(text_pattern);
+
+                if (!generatedText.empty()) {
+                    std::cout << "Сгенерированный текст:\n" << generatedText << std::endl;
+                } else {
+                    std::cout << "Ошибка при генерации текста." << std::endl;
+                }
+
+                std::string tempFilePath = GENERATE_JOKES_TEXT_OUTPUT + std::to_string(text.size()) + ".txt";
+                std::ofstream tempFile(tempFilePath);
+
+                tempFile << generatedText;
+                media.local_path = tempFilePath;
+                tempFile.close();
+                ShellExecute(nullptr, "open", tempFilePath.c_str(), nullptr, nullptr, SW_SHOWNORMAL);
+
+                if(media.local_path != "")
+                {
+                    media.distributing(media.local_path);
+                }
+
+                last.file_path = tempFilePath;
+                last.prompt = text_pattern;
+
+                text.push_back(last);
+
+                saveHistory(text, HISTORY_FILE_TEXTS);
+
+                return tempFilePath;
+            }
+            case 2:
+            {
+                return showHistory(text, HISTORY_FILE_TEXTS);
+            }
+            case 0:
+                exit = true;
+                break;
+            default:
+                std::cout << "Не верный выбор. Попробуйте снова.\n";
+                break;
+
         }
     }
-
-    std::cout << "Отправка запроса с данными:\n" << text_pattern << std::endl;
-
-    std::string generatedText = Check_server_answer::validate_and_resend(text_pattern);
-
-    if (!generatedText.empty()) {
-        std::cout << "Сгенерированный текст:\n" << generatedText << std::endl;
-    } else {
-        std::cout << "Ошибка при генерации текста." << std::endl;
-    }
-
-    std::string tempFilePath = GENERATE_JOKES_TEXT_OUTPUT;
-    std::ofstream tempFile(tempFilePath);
-
-    tempFile << generatedText;
-    media.local_path = generatedText;
-    tempFile.close();
-    ShellExecute(nullptr, "open", tempFilePath.c_str(), nullptr, nullptr, SW_SHOWNORMAL);
-
-    if(media.local_path != "")
-    {
-        media.distributing(media.local_path);
-    }
-
-    last.file_path = GENERATE_JOKES_TEXT_OUTPUT;
-    last.prompt = text_pattern;
-
-    img.push_back(last);
-
-    saveHistory(img, HISTORY_FILE_IMAGES);
-
-    return GENERATE_JOKES_TEXT_OUTPUT;
+    return "";
 }

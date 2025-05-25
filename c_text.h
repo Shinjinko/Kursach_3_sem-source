@@ -8,7 +8,7 @@
 #include <fstream>
 #include <unordered_map>
 #include "Exp.h"
-#define GENERATE_JOKES_TEXT_OUTPUT R"(D:\Proga\Turovec\Kursach\Meme Generator\custom\jokes_output.txt)"
+#define GENERATE_JOKES_TEXT_OUTPUT R"(D:\Proga\Turovec\Kursach\Meme Generator\custom\jokes_output)"
 
 class C_Text : public virtual Custom {
 public:
@@ -24,6 +24,7 @@ class T_Settings : public C_Text {
 public:
     cv::Scalar text_color;
     int font_size;
+    bool change;
 
     cv::Scalar getTextColor() const;
     void setTextColor(std::string color_name);
@@ -31,7 +32,7 @@ public:
     int getFontSize() const;
     void setFontSize(int size);
 
-    T_Settings() : text_color(0, 0, 0), font_size(12) {}
+    T_Settings() : text_color(0, 0, 0), font_size(12), change(false) {}
 
     std::string generate_meme() override;
 };

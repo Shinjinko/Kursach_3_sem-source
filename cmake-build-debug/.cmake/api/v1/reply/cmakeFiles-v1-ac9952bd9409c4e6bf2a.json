@@ -1,0 +1,524 @@
+{
+	"inputs" : 
+	[
+		{
+			"path" : "CMakeLists.txt"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/CMakeFiles/3.28.6/CMakeSystem.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "C:/Users/HONOR/.vcpkg-clion/scripts/buildsystems/vcpkg.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Program Files/JetBrains/CLion 2024.1.5/bin/cmake/win/x64/share/cmake-3.28/Modules/CMakeDependentOption.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Program Files/JetBrains/CLion 2024.1.5/bin/cmake/win/x64/share/cmake-3.28/Modules/CMakeSystemSpecificInitialize.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Program Files/JetBrains/CLion 2024.1.5/bin/cmake/win/x64/share/cmake-3.28/Modules/Platform/Windows-Initialize.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/CMakeFiles/3.28.6/CMakeCCompiler.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/CMakeFiles/3.28.6/CMakeCXXCompiler.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Program Files/JetBrains/CLion 2024.1.5/bin/cmake/win/x64/share/cmake-3.28/Modules/CMakeSystemSpecificInformation.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Program Files/JetBrains/CLion 2024.1.5/bin/cmake/win/x64/share/cmake-3.28/Modules/CMakeGenericSystem.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Program Files/JetBrains/CLion 2024.1.5/bin/cmake/win/x64/share/cmake-3.28/Modules/CMakeInitializeConfigs.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Program Files/JetBrains/CLion 2024.1.5/bin/cmake/win/x64/share/cmake-3.28/Modules/Platform/Windows.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Program Files/JetBrains/CLion 2024.1.5/bin/cmake/win/x64/share/cmake-3.28/Modules/Platform/WindowsPaths.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Program Files/JetBrains/CLion 2024.1.5/bin/cmake/win/x64/share/cmake-3.28/Modules/CMakeCInformation.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Program Files/JetBrains/CLion 2024.1.5/bin/cmake/win/x64/share/cmake-3.28/Modules/CMakeLanguageInformation.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Program Files/JetBrains/CLion 2024.1.5/bin/cmake/win/x64/share/cmake-3.28/Modules/Compiler/GNU-C.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Program Files/JetBrains/CLion 2024.1.5/bin/cmake/win/x64/share/cmake-3.28/Modules/Compiler/GNU.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Program Files/JetBrains/CLion 2024.1.5/bin/cmake/win/x64/share/cmake-3.28/Modules/Compiler/CMakeCommonCompilerMacros.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Program Files/JetBrains/CLion 2024.1.5/bin/cmake/win/x64/share/cmake-3.28/Modules/Platform/Windows-GNU-C.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Program Files/JetBrains/CLion 2024.1.5/bin/cmake/win/x64/share/cmake-3.28/Modules/Platform/Windows-GNU.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/CMakeFiles/3.28.6/CMakeRCCompiler.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Program Files/JetBrains/CLion 2024.1.5/bin/cmake/win/x64/share/cmake-3.28/Modules/CMakeRCInformation.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Program Files/JetBrains/CLion 2024.1.5/bin/cmake/win/x64/share/cmake-3.28/Modules/Platform/Windows-windres.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Program Files/JetBrains/CLion 2024.1.5/bin/cmake/win/x64/share/cmake-3.28/Modules/Platform/Windows-GNU-C-ABI.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Program Files/JetBrains/CLion 2024.1.5/bin/cmake/win/x64/share/cmake-3.28/Modules/CMakeCommonLanguageInclude.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Program Files/JetBrains/CLion 2024.1.5/bin/cmake/win/x64/share/cmake-3.28/Modules/CMakeCXXInformation.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Program Files/JetBrains/CLion 2024.1.5/bin/cmake/win/x64/share/cmake-3.28/Modules/CMakeLanguageInformation.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Program Files/JetBrains/CLion 2024.1.5/bin/cmake/win/x64/share/cmake-3.28/Modules/Compiler/GNU-CXX.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Program Files/JetBrains/CLion 2024.1.5/bin/cmake/win/x64/share/cmake-3.28/Modules/Compiler/GNU.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Program Files/JetBrains/CLion 2024.1.5/bin/cmake/win/x64/share/cmake-3.28/Modules/Platform/Windows-GNU-CXX.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Program Files/JetBrains/CLion 2024.1.5/bin/cmake/win/x64/share/cmake-3.28/Modules/Platform/Windows-GNU.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Program Files/JetBrains/CLion 2024.1.5/bin/cmake/win/x64/share/cmake-3.28/Modules/Platform/Windows-GNU-CXX-ABI.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Program Files/JetBrains/CLion 2024.1.5/bin/cmake/win/x64/share/cmake-3.28/Modules/CMakeCommonLanguageInclude.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "C:/Users/HONOR/.vcpkg-clion/installed/x64-mingw-dynamic/share/opencv2/OpenCVConfig-version.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "C:/Users/HONOR/.vcpkg-clion/installed/x64-mingw-dynamic/share/opencv2/OpenCVConfig.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "C:/Users/HONOR/.vcpkg-clion/installed/x64-mingw-dynamic/share/opencv2/OpenCVModules.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "C:/Users/HONOR/.vcpkg-clion/installed/x64-mingw-dynamic/share/opencv2/OpenCVModules-debug.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "C:/Users/HONOR/.vcpkg-clion/installed/x64-mingw-dynamic/share/opencv2/OpenCVModules-release.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "C:/Users/HONOR/.vcpkg-clion/installed/x64-mingw-dynamic/share/curl/vcpkg-cmake-wrapper.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "C:/Users/HONOR/.vcpkg-clion/installed/x64-mingw-dynamic/share/curl/CURLConfigVersion.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "C:/Users/HONOR/.vcpkg-clion/installed/x64-mingw-dynamic/share/curl/CURLConfig.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Program Files/JetBrains/CLion 2024.1.5/bin/cmake/win/x64/share/cmake-3.28/Modules/CMakeFindDependencyMacro.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "C:/Users/HONOR/.vcpkg-clion/installed/x64-mingw-dynamic/share/zlib/vcpkg-cmake-wrapper.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Program Files/JetBrains/CLion 2024.1.5/bin/cmake/win/x64/share/cmake-3.28/Modules/FindZLIB.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Program Files/JetBrains/CLion 2024.1.5/bin/cmake/win/x64/share/cmake-3.28/Modules/SelectLibraryConfigurations.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Program Files/JetBrains/CLion 2024.1.5/bin/cmake/win/x64/share/cmake-3.28/Modules/FindPackageHandleStandardArgs.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Program Files/JetBrains/CLion 2024.1.5/bin/cmake/win/x64/share/cmake-3.28/Modules/FindPackageMessage.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "C:/Users/HONOR/.vcpkg-clion/installed/x64-mingw-dynamic/share/curl/CURLTargets.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "C:/Users/HONOR/.vcpkg-clion/installed/x64-mingw-dynamic/share/curl/CURLTargets-debug.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "C:/Users/HONOR/.vcpkg-clion/installed/x64-mingw-dynamic/share/curl/CURLTargets-release.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Program Files/JetBrains/CLion 2024.1.5/bin/cmake/win/x64/share/cmake-3.28/Modules/SelectLibraryConfigurations.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "C:/Users/HONOR/.vcpkg-clion/installed/x64-mingw-dynamic/share/openssl/vcpkg-cmake-wrapper.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Program Files/JetBrains/CLion 2024.1.5/bin/cmake/win/x64/share/cmake-3.28/Modules/FindOpenSSL.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Program Files/JetBrains/CLion 2024.1.5/bin/cmake/win/x64/share/cmake-3.28/Modules/FindPackageHandleStandardArgs.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Program Files/JetBrains/CLion 2024.1.5/bin/cmake/win/x64/share/cmake-3.28/Modules/FindPackageMessage.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "C:/Users/HONOR/.vcpkg-clion/installed/x64-mingw-dynamic/share/jsoncpp/jsoncppConfigVersion.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "C:/Users/HONOR/.vcpkg-clion/installed/x64-mingw-dynamic/share/jsoncpp/jsoncppConfig.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "C:/Users/HONOR/.vcpkg-clion/installed/x64-mingw-dynamic/share/jsoncpp/jsoncpp-targets.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "C:/Users/HONOR/.vcpkg-clion/installed/x64-mingw-dynamic/share/jsoncpp/jsoncpp-targets-debug.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "C:/Users/HONOR/.vcpkg-clion/installed/x64-mingw-dynamic/share/jsoncpp/jsoncpp-targets-release.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "C:/Users/HONOR/.vcpkg-clion/installed/x64-mingw-dynamic/share/jsoncpp/jsoncpp-namespaced-targets.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "C:/Users/HONOR/.vcpkg-clion/installed/x64-mingw-dynamic/share/nlohmann_json/nlohmann_jsonConfigVersion.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "C:/Users/HONOR/.vcpkg-clion/installed/x64-mingw-dynamic/share/nlohmann_json/nlohmann_jsonConfig.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Program Files/JetBrains/CLion 2024.1.5/bin/cmake/win/x64/share/cmake-3.28/Modules/FindPackageHandleStandardArgs.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Program Files/JetBrains/CLion 2024.1.5/bin/cmake/win/x64/share/cmake-3.28/Modules/FindPackageMessage.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "C:/Users/HONOR/.vcpkg-clion/installed/x64-mingw-dynamic/share/nlohmann_json/nlohmann_jsonTargets.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "C:/Users/HONOR/.vcpkg-clion/installed/x64-mingw-dynamic/share/boost/vcpkg-cmake-wrapper.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Program Files/JetBrains/CLion 2024.1.5/bin/cmake/win/x64/share/cmake-3.28/Modules/FindBoost.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Program Files/JetBrains/CLion 2024.1.5/bin/cmake/win/x64/share/cmake-3.28/Modules/FindPackageHandleStandardArgs.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Program Files/JetBrains/CLion 2024.1.5/bin/cmake/win/x64/share/cmake-3.28/Modules/FindPackageMessage.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "C:/Users/HONOR/.vcpkg-clion/installed/x64-mingw-dynamic/share/boost/vcpkg-cmake-wrapper.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "C:/Users/HONOR/.vcpkg-clion/installed/x64-mingw-dynamic/share/boost/BoostConfigVersion.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "C:/Users/HONOR/.vcpkg-clion/installed/x64-mingw-dynamic/share/boost/BoostConfig.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "C:/Users/HONOR/.vcpkg-clion/installed/x64-mingw-dynamic/share/boost_headers/boost_headers-config-version.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "C:/Users/HONOR/.vcpkg-clion/installed/x64-mingw-dynamic/share/boost_headers/boost_headers-config.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "C:/Users/HONOR/.vcpkg-clion/installed/x64-mingw-dynamic/share/boost_headers/boost_headers-targets.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "C:/Users/HONOR/.vcpkg-clion/installed/x64-mingw-dynamic/share/boost_system/boost_system-config-version.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "C:/Users/HONOR/.vcpkg-clion/installed/x64-mingw-dynamic/share/boost_system/boost_system-config.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Program Files/JetBrains/CLion 2024.1.5/bin/cmake/win/x64/share/cmake-3.28/Modules/CMakeFindDependencyMacro.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "C:/Users/HONOR/.vcpkg-clion/installed/x64-mingw-dynamic/share/boost_assert/boost_assert-config-version.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "C:/Users/HONOR/.vcpkg-clion/installed/x64-mingw-dynamic/share/boost_assert/boost_assert-config.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Program Files/JetBrains/CLion 2024.1.5/bin/cmake/win/x64/share/cmake-3.28/Modules/CMakeFindDependencyMacro.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "C:/Users/HONOR/.vcpkg-clion/installed/x64-mingw-dynamic/share/boost_config/boost_config-config-version.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "C:/Users/HONOR/.vcpkg-clion/installed/x64-mingw-dynamic/share/boost_config/boost_config-config.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "C:/Users/HONOR/.vcpkg-clion/installed/x64-mingw-dynamic/share/boost_config/boost_config-targets.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "C:/Users/HONOR/.vcpkg-clion/installed/x64-mingw-dynamic/share/boost_assert/boost_assert-targets.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "C:/Users/HONOR/.vcpkg-clion/installed/x64-mingw-dynamic/share/boost_throw_exception/boost_throw_exception-config-version.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "C:/Users/HONOR/.vcpkg-clion/installed/x64-mingw-dynamic/share/boost_throw_exception/boost_throw_exception-config.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Program Files/JetBrains/CLion 2024.1.5/bin/cmake/win/x64/share/cmake-3.28/Modules/CMakeFindDependencyMacro.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "C:/Users/HONOR/.vcpkg-clion/installed/x64-mingw-dynamic/share/boost_throw_exception/boost_throw_exception-targets.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "C:/Users/HONOR/.vcpkg-clion/installed/x64-mingw-dynamic/share/boost_variant2/boost_variant2-config-version.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "C:/Users/HONOR/.vcpkg-clion/installed/x64-mingw-dynamic/share/boost_variant2/boost_variant2-config.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Program Files/JetBrains/CLion 2024.1.5/bin/cmake/win/x64/share/cmake-3.28/Modules/CMakeFindDependencyMacro.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "C:/Users/HONOR/.vcpkg-clion/installed/x64-mingw-dynamic/share/boost_mp11/boost_mp11-config-version.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "C:/Users/HONOR/.vcpkg-clion/installed/x64-mingw-dynamic/share/boost_mp11/boost_mp11-config.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "C:/Users/HONOR/.vcpkg-clion/installed/x64-mingw-dynamic/share/boost_mp11/boost_mp11-targets.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "C:/Users/HONOR/.vcpkg-clion/installed/x64-mingw-dynamic/share/boost_variant2/boost_variant2-targets.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "C:/Users/HONOR/.vcpkg-clion/installed/x64-mingw-dynamic/share/boost_winapi/boost_winapi-config-version.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "C:/Users/HONOR/.vcpkg-clion/installed/x64-mingw-dynamic/share/boost_winapi/boost_winapi-config.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Program Files/JetBrains/CLion 2024.1.5/bin/cmake/win/x64/share/cmake-3.28/Modules/CMakeFindDependencyMacro.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "C:/Users/HONOR/.vcpkg-clion/installed/x64-mingw-dynamic/share/boost_predef/boost_predef-config-version.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "C:/Users/HONOR/.vcpkg-clion/installed/x64-mingw-dynamic/share/boost_predef/boost_predef-config.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "C:/Users/HONOR/.vcpkg-clion/installed/x64-mingw-dynamic/share/boost_predef/boost_predef-targets.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "C:/Users/HONOR/.vcpkg-clion/installed/x64-mingw-dynamic/share/boost_winapi/boost_winapi-targets.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "C:/Users/HONOR/.vcpkg-clion/installed/x64-mingw-dynamic/share/boost_system/boost_system-targets.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "C:/Users/HONOR/.vcpkg-clion/installed/x64-mingw-dynamic/share/boost_system/boost_system-targets-debug.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "C:/Users/HONOR/.vcpkg-clion/installed/x64-mingw-dynamic/share/boost_system/boost_system-targets-release.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Program Files/JetBrains/CLion 2024.1.5/bin/cmake/win/x64/share/cmake-3.28/Modules/FindThreads.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Program Files/JetBrains/CLion 2024.1.5/bin/cmake/win/x64/share/cmake-3.28/Modules/CheckLibraryExists.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Program Files/JetBrains/CLion 2024.1.5/bin/cmake/win/x64/share/cmake-3.28/Modules/CheckIncludeFile.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Program Files/JetBrains/CLion 2024.1.5/bin/cmake/win/x64/share/cmake-3.28/Modules/CheckCSourceCompiles.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Program Files/JetBrains/CLion 2024.1.5/bin/cmake/win/x64/share/cmake-3.28/Modules/Internal/CheckSourceCompiles.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Program Files/JetBrains/CLion 2024.1.5/bin/cmake/win/x64/share/cmake-3.28/Modules/FindPackageHandleStandardArgs.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Program Files/JetBrains/CLion 2024.1.5/bin/cmake/win/x64/share/cmake-3.28/Modules/FindPackageMessage.cmake"
+		}
+	],
+	"kind" : "cmakeFiles",
+	"paths" : 
+	{
+		"build" : "D:/Proga/Turovec/Kursach/Meme Generator/sourse/cmake-build-debug",
+		"source" : "D:/Proga/Turovec/Kursach/Meme Generator/sourse"
+	},
+	"version" : 
+	{
+		"major" : 1,
+		"minor" : 0
+	}
+}

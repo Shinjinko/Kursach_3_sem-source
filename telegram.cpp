@@ -81,6 +81,7 @@ void startBot(const std::string& filePath) {
 
     try {
         std::cout << "Бот запущен!" << std::endl;
+        std::cout << "Напишите сообщение боту: " << BOT_TG << std::endl;
         TgBot::TgLongPoll longPoll(bot);
         while (botRunning) { // Цикл работает, пока botRunning == true
             longPoll.start();

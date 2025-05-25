@@ -18,14 +18,14 @@ void Social_Media::distributing (std::string file_name)
             switch (Numbers::check_input())
             {
                 case 1: {
-                    Telegram* tg = new Telegram(local_path);
-                    tg->distributing(local_path);
+                    Telegram* tg = new Telegram(file_name);
+                    tg->distributing(file_name);
                     delete tg;
                     break;
                 }
                 case 2: {
-                    VK* vk = new VK(local_path);
-                    vk->distributing(local_path);
+                    VK* vk = new VK(file_name);
+                    vk->distributing(file_name);
                     delete vk;
                     break;
                 }
